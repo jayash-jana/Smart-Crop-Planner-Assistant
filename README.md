@@ -53,5 +53,5 @@ Mani Nila S
 
 
 
-Vidhaix ultimately strives to bridge the gap between what is grown in the field and what is demanded in the market, making technology a practical ally in everyday farming decisions.
+
 
