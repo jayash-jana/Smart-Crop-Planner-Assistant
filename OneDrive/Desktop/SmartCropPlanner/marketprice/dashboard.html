@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Farmer Market — Live Price Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0a0f0d;
+    --surface:   #111a15;
+    --card:      #162019;
+    --border:    #1e3024;
+    --green:     #2dff8c;
+    --green-dim: #1a7a44;
+    --red:       #ff4d6d;
+    --yellow:    #ffd166;
+    --text:      #e8f5ed;
+    --muted:     #5a7a63;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Syne', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Grid noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(45,255,140,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45,255,140,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,15,13,.9);
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: var(--green);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+  }
+  .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: -.02em; }
+  .logo-sub { font-size: .7rem; font-family: var(--mono); color: var(--muted); letter-spacing: .1em; }
+
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+
+  .live-badge {
+    display: flex; align-items: center; gap: .4rem;
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .08em;
+    color: var(--green); border: 1px solid var(--green-dim);
+    padding: .3rem .7rem; border-radius: 20px;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--green); border-radius: 50%;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  .btn {
+    font-family: var(--mono); font-size: .75rem; letter-spacing: .05em;
+    padding: .5rem 1.2rem; border-radius: 6px; cursor: pointer;
+    border: none; transition: all .2s;
+  }
+  .btn-primary { background: var(--green); color: #000; font-weight: 600; }
+  .btn-primary:hover { background: #1ddf6c; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-danger:hover { background: #e03050; }
+
+  /* ── Layout ── */
+  .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2.5rem; position: relative; z-index: 1; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .page-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -.03em; }
+  .page-title span { color: var(--green); }
+  .last-updated { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+
+  .actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  @media(max-width:900px){ .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color .2s;
+  }
+  .stat-card:hover { border-color: var(--green-dim); }
+  .stat-card::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(45,255,140,.06), transparent 70%);
+    border-radius: 50%;
+  }
+  .stat-label { font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; color: var(--muted); margin-bottom: .5rem; }
+  .stat-value { font-size: 2rem; font-weight: 800; letter-spacing: -.03em; }
+  .stat-sub { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-top: .25rem; }
+
+  /* ── Grid ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+  }
+  @media(max-width:1100px){ .main-grid { grid-template-columns: 1fr; } }
+
+  /* ── Price table ── */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-title { font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .panel-badge {
+    font-family: var(--mono); font-size: .65rem;
+    background: var(--border); color: var(--muted);
+    padding: .2rem .6rem; border-radius: 20px;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    padding: .75rem 1.5rem; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr {
+    border-bottom: 1px solid rgba(30,48,36,.5);
+    transition: background .15s; cursor: pointer;
+  }
+  tbody tr:hover { background: rgba(45,255,140,.03); }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: .85rem 1.5rem; font-size: .85rem; }
+  .td-commodity { font-weight: 700; }
+  .td-price { font-family: var(--mono); font-size: .9rem; }
+  .td-range { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+
+  .badge-up   { color: var(--green); }
+  .badge-down { color: var(--red);   }
+  .badge-flat { color: var(--muted); }
+
+  .change-pill {
+    display: inline-flex; align-items: center; gap: .25rem;
+    padding: .2rem .55rem; border-radius: 20px; font-family: var(--mono); font-size: .7rem; font-weight: 500;
+  }
+  .pill-up   { background: rgba(45,255,140,.12); color: var(--green); }
+  .pill-down { background: rgba(255,77,109,.12); color: var(--red); }
+  .pill-flat { background: var(--border);        color: var(--muted); }
+
+  /* ── Right sidebar ── */
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* ── Chart panel ── */
+  .chart-wrap { padding: 1.25rem; }
+  .chart-controls {
+    display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap;
+  }
+  .chip {
+    font-family: var(--mono); font-size: .65rem; letter-spacing: .05em;
+    padding: .3rem .75rem; border-radius: 20px; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--muted);
+    transition: all .15s;
+  }
+  .chip.active, .chip:hover { border-color: var(--green); color: var(--green); }
+
+  /* ── Comparison cards ── */
+  .compare-list { padding: .75rem 1rem; display: flex; flex-direction: column; gap: .5rem; max-height: 320px; overflow-y: auto; }
+  .compare-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .65rem .75rem; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: border-color .15s;
+  }
+  .compare-item:hover { border-color: var(--green-dim); }
+  .ci-name { font-size: .8rem; font-weight: 700; }
+  .ci-prices { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+  .ci-right { text-align: right; }
+
+  /* ── Source chip ── */
+  .source-chip {
+    font-family: var(--mono); font-size: .6rem; letter-spacing: .05em;
+    padding: .15rem .45rem; border-radius: 4px;
+    background: rgba(45,255,140,.08); color: var(--green-dim);
+    border: 1px solid rgba(45,255,140,.15);
+  }
+  .source-sim { background: rgba(255,209,102,.08); color: #8a6e1a; border-color: rgba(255,209,102,.2); }
+
+  /* ── Empty / Loading state ── */
+  .empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 4rem 2rem; color: var(--muted);
+    font-family: var(--mono); font-size: .8rem; text-align: center; gap: 1rem;
+  }
+  .empty-icon { font-size: 2.5rem; opacity: .4; }
+
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: .9rem 1.5rem;
+    font-family: var(--mono); font-size: .8rem;
+    transform: translateY(100px); opacity: 0;
+    transition: all .3s ease;
+    max-width: 320px;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+  #toast.success { border-color: var(--green-dim); color: var(--green); }
+  #toast.error   { border-color: var(--red); color: var(--red); }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🌾</div>
+    <div>
+      <div class="logo-text">SmartFarket</div>
+      <div class="logo-sub">FARMER MARKET INTELLIGENCE</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-badge"><span class="live-dot"></span>LIVE DATA</div>
+    <button class="btn btn-ghost" onclick="startScheduler()">⏱ Auto Fetch</button>
+    <button class="btn btn-danger" onclick="stopScheduler()">⏹ Stop</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="container">
+
+  <div class="top-bar">
+    <div>
+      <div class="page-title">Market <span>Price Board</span></div>
+      <div class="last-updated" id="lastUpdated">Last updated: —</div>
+    </div>
+    <div class="actions">
+      <div class="spinner" id="spinner"></div>
+      <button class="btn btn-ghost" onclick="loadData()">↺ Refresh</button>
+      <button class="btn btn-primary" onclick="fetchAndStore()">⬇ Fetch Live Prices</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">TOTAL COMMODITIES</div>
+      <div class="stat-value" id="totalCommodities">—</div>
+      <div class="stat-sub">tracked today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">AVG MODAL PRICE</div>
+      <div class="stat-value" id="avgPrice">—</div>
+      <div class="stat-sub">₹ per quintal</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">HIGHEST TODAY</div>
+      <div class="stat-value" id="highestPrice" style="color:var(--green)">—</div>
+      <div class="stat-sub" id="highestCommodity">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">LOWEST TODAY</div>
+      <div class="stat-value" id="lowestPrice" style="color:var(--yellow)">—</div>
+      <div class="stat-sub" id="lowestCommodity">—</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT: Price Table -->
+    <div>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Live Market Prices</span>
+          <span class="panel-badge" id="recordCount">0 records</span>
+        </div>
+        <div id="priceTableContainer">
+          <div class="empty">
+            <div class="empty-icon">🌱</div>
+            <div>No price data yet.<br>Click "Fetch Live Prices" to load market data.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Chart -->
+      <div class="panel" style="margin-top:1.5rem">
+        <div class="panel-header">
+          <span class="panel-title">Price History</span>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-controls" id="commodityChips"></div>
+          <canvas id="historyChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Sidebar -->
+    <div class="sidebar">
+
+      <!-- Today vs Yesterday -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Today vs Yesterday</span>
+          <span class="panel-badge">COMPARISON</span>
+        </div>
+        <div class="compare-list" id="compareList">
+          <div class="empty" style="padding:2rem">
+            <div class="empty-icon">📊</div>
+            <div>Fetch data to see comparison</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market Distribution Chart -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Price Distribution</span>
+          <span class="panel-badge">DONUT</span>
+        </div>
+        <div class="chart-wrap" style="display:flex;justify-content:center">
+          <canvas id="donutChart" width="280" height="280"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+let latestPrices = [];
+let historyChart = null;
+let donutChart   = null;
+let selectedCommodity = 'Tomato';
+
+const COMMODITIES = ['Tomato','Onion','Potato','Rice','Wheat','Maize','Garlic','Ginger','Chilli','Brinjal'];
+
+// ── API Helpers ──────────────────────────────────────────────────────────────
+async function api(path, method = 'GET') {
+  const res = await fetch(path, { method });
+  return res.json();
+}
+
+function showSpinner(on) {
+  document.getElementById('spinner').style.display = on ? 'block' : 'none';
+}
+
+function toast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `show ${type}`;
+  setTimeout(() => t.className = '', 3000);
+}
+
+// ── Fetch & Store ─────────────────────────────────────────────────────────────
+async function fetchAndStore() {
+  showSpinner(true);
+  try {
+    const data = await api('/api/prices/fetch', 'POST');
+    if (data.status === 'success') {
+      toast(`✓ Fetched & stored ${data.count} price records`);
+      await loadData();
+    } else {
+      toast('✗ ' + (data.message || 'Failed'), 'error');
+    }
+  } catch(e) {
+    toast('✗ Server error: ' + e.message, 'error');
+  }
+  showSpinner(false);
+}
+
+// ── Load All Data ─────────────────────────────────────────────────────────────
+async function loadData() {
+  showSpinner(true);
+  try {
+    const [priceRes, compareRes] = await Promise.all([
+      api('/api/prices/latest'),
+      api('/api/prices/compare')
+    ]);
+    latestPrices = priceRes.data || [];
+    renderPriceTable(latestPrices);
+    renderStats(latestPrices);
+    renderComparison(compareRes.data || []);
+    renderDonut(latestPrices);
+    renderChips();
+    loadHistory(selectedCommodity);
+    document.getElementById('lastUpdated').textContent =
+      'Last updated: ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    toast('✗ Load failed: ' + e.message, 'error');
+  }
+  showSpinner(false);
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+function renderStats(prices) {
+  if (!prices.length) return;
+  const modals = prices.map(p => p.modal_price).filter(Boolean);
+  const avg    = modals.reduce((a,b) => a+b, 0) / modals.length;
+  const maxP   = prices.reduce((a,b) => b.modal_price > a.modal_price ? b : a);
+  const minP   = prices.reduce((a,b) => b.modal_price < a.modal_price ? b : a);
+
+  document.getElementById('totalCommodities').textContent = prices.length;
+  document.getElementById('avgPrice').textContent         = '₹' + Math.round(avg).toLocaleString();
+  document.getElementById('highestPrice').textContent     = '₹' + Math.round(maxP.modal_price).toLocaleString();
+  document.getElementById('highestCommodity').textContent = maxP.commodity;
+  document.getElementById('lowestPrice').textContent      = '₹' + Math.round(minP.modal_price).toLocaleString();
+  document.getElementById('lowestCommodity').textContent  = minP.commodity;
+}
+
+// ── Price Table ───────────────────────────────────────────────────────────────
+function renderPriceTable(prices) {
+  const container = document.getElementById('priceTableContainer');
+  document.getElementById('recordCount').textContent = prices.length + ' records';
+
+  if (!prices.length) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">🌱</div><div>No data. Click "Fetch Live Prices".</div></div>`;
+    return;
+  }
+
+  const rows = prices.map(p => {
+    const src = p.source && p.source.includes('Simulated')
+      ? `<span class="source-chip source-sim">DEMO</span>`
+      : `<span class="source-chip">LIVE</span>`;
+    return `
+      <tr onclick="selectCommodity('${p.commodity}')">
+        <td class="td-commodity">${p.commodity} ${src}</td>
+        <td class="td-price">₹${Math.round(p.modal_price).toLocaleString()}</td>
+        <td class="td-range">₹${Math.round(p.min_price||0).toLocaleString()} – ₹${Math.round(p.max_price||0).toLocaleString()}</td>
+        <td>${p.unit || 'per Quintal'}</td>
+        <td>${p.market || '—'}</td>
+      </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Commodity</th>
+        <th>Modal Price</th>
+        <th>Range</th>
+        <th>Unit</th>
+        <th>Market</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Comparison ────────────────────────────────────────────────────────────────
+function renderComparison(data) {
+  const el = document.getElementById('compareList');
+  if (!data.length) {
+    el.innerHTML = `<div class="empty" style="padding:2rem"><div class="empty-icon">📊</div><div>Need 2 days of data for comparison</div></div>`;
+    return;
+  }
+
+  el.innerHTML = data.map(d => {
+    const arrow = d.trend === 'up' ? '▲' : d.trend === 'down' ? '▼' : '—';
+    const cls   = d.trend === 'up' ? 'pill-up' : d.trend === 'down' ? 'pill-down' : 'pill-flat';
+    const pct   = d.pct_change ? `${d.pct_change > 0 ? '+' : ''}${d.pct_change.toFixed(1)}%` : '—';
+    return `
+      <div class="compare-item">
+        <div>
+          <div class="ci-name">${d.commodity}</div>
+          <div class="ci-prices">
+            Today: ${d.today_price ? '₹'+Math.round(d.today_price).toLocaleString() : '—'}
+          </div>
+        </div>
+        <div class="ci-right">
+          <span class="change-pill ${cls}">${arrow} ${pct}</span>
+          <div class="ci-prices" style="margin-top:.3rem">
+            Prev: ${d.yesterday_price ? '₹'+Math.round(d.yesterday_price).toLocaleString() : '—'}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Commodity Chips ───────────────────────────────────────────────────────────
+function renderChips() {
+  const available = latestPrices.map(p => p.commodity);
+  const chips = available.length ? available : COMMODITIES;
+  document.getElementById('commodityChips').innerHTML = chips.map(c => `
+    <button class="chip ${c === selectedCommodity ? 'active' : ''}" onclick="selectCommodity('${c}')">${c}</button>
+  `).join('');
+}
+
+function selectCommodity(c) {
+  selectedCommodity = c;
+  renderChips();
+  loadHistory(c);
+}
+
+// ── History Chart ─────────────────────────────────────────────────────────────
+async function loadHistory(commodity) {
+  try {
+    const res = await api(`/api/prices/history?commodity=${commodity}&limit=20`);
+    const data = res.data || [];
+    renderHistoryChart(commodity, data);
+  } catch(e) { console.error(e); }
+}
+
+function renderHistoryChart(commodity, data) {
+  const ctx = document.getElementById('historyChart').getContext('2d');
+  if (historyChart) historyChart.destroy();
+
+  const labels = data.map(d => {
+    const dt = new Date(d.created_at);
+    return dt.toLocaleDateString('en-IN', { day:'2-digit', month:'short' }) + ' ' +
+           dt.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  });
+  const modals = data.map(d => d.modal_price);
+  const mins   = data.map(d => d.min_price);
+  const maxs   = data.map(d => d.max_price);
+
+  historyChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Modal Price',
+          data: modals,
+          borderColor: '#2dff8c',
+          backgroundColor: 'rgba(45,255,140,.08)',
+          borderWidth: 2,
+          pointRadius: 3,
+          tension: 0.4,
+          fill: true
+        },
+        {
+          label: 'Min Price',
+          data: mins,
+          borderColor: 'rgba(45,255,140,.3)',
+          borderDash: [4,4],
+          borderWidth: 1,
+          pointRadius: 0,
+          tension: 0.4
+        },
+        {
+          label: 'Max Price',
+          data: maxs,
+          borderColor: 'rgba(255,77,109,.4)',
+          borderDash: [4,4],
+          borderWidth: 1,
+          pointRadius: 0,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#5a7a63', font: { family: 'JetBrains Mono', size: 10 } } },
+        title: {
+          display: true,
+          text: `${commodity} — Price History (₹/Quintal)`,
+          color: '#e8f5ed',
+          font: { family: 'Syne', size: 13, weight: '700' }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#5a7a63', font: { family: 'JetBrains Mono', size: 9 }, maxTicksLimit: 8 },
+          grid: { color: 'rgba(30,48,36,.5)' }
+        },
+        y: {
+          ticks: {
+            color: '#5a7a63',
+            font: { family: 'JetBrains Mono', size: 9 },
+            callback: v => '₹' + v.toLocaleString()
+          },
+          grid: { color: 'rgba(30,48,36,.5)' }
+        }
+      }
+    }
+  });
+}
+
+// ── Donut Chart ───────────────────────────────────────────────────────────────
+function renderDonut(prices) {
+  const ctx = document.getElementById('donutChart').getContext('2d');
+  if (donutChart) donutChart.destroy();
+  if (!prices.length) return;
+
+  const labels = prices.map(p => p.commodity);
+  const vals   = prices.map(p => p.modal_price);
+  const colors = [
+    '#2dff8c','#1db86a','#ffd166','#ff6b6b','#4ecdc4',
+    '#a8e6cf','#ff8b94','#c7f2a4','#84d8ff','#b8b8ff'
+  ];
+
+  donutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: vals,
+        backgroundColor: colors,
+        borderColor: '#162019',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      cutout: '65%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#5a7a63',
+            font: { family: 'JetBrains Mono', size: 9 },
+            padding: 8,
+            boxWidth: 10
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ₹${Math.round(ctx.parsed).toLocaleString()}/Quintal`
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Scheduler ────────────────────────────────────────────────────────────────
+async function startScheduler() {
+  const res = await api('/api/scheduler/start', 'POST');
+  toast('⏱ ' + res.message);
+}
+async function stopScheduler() {
+  const res = await api('/api/scheduler/stop', 'POST');
+  toast('⏹ ' + res.message, 'error');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadData();
+// Auto-refresh every 5 minutes
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
