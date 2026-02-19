@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Crop Planner - ML Powered</title>
+    <title>VidhaiX - AI ML Planner</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,7 +22,17 @@
         <div class="flex justify-between items-center h-20">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-seedling text-3xl text-green-600"></i>
-                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+                <span class="text-2xl font-bold text-gray-800">Vidhai<span class="text-green-600">X</span></span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-green-600 font-medium border-b-2 border-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-gray-600 hover:text-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
             </div>
         </div>
     </div>
@@ -31,9 +41,24 @@
 <!-- Main Content -->
 <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
 
+    <!-- Back Button to Dashboard -->
+    <div class="mb-6 flex items-center justify-between">
+        <a href="dashboard.html" class="inline-flex items-center text-gray-600 hover:text-green-600 transition group">
+            <div class="bg-white p-2 rounded-full shadow-md group-hover:shadow-lg transition mr-3">
+                <i class="fas fa-arrow-left text-green-600"></i>
+            </div>
+            <span class="font-medium">Back to Dashboard</span>
+        </a>
+        
+        <!-- Quick Stats (Optional) -->
+        <div class="hidden sm:block text-sm text-gray-500">
+            <i class="far fa-clock mr-1"></i> Last updated: March 2025
+        </div>
+    </div>
+
     <!-- Header -->
     <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">🌾 ML-Powered Crop Planner</h1>
+        <h1 class="text-3xl font-bold text-gray-900">🌾VidhaiX Planner</h1>
         <p class="text-gray-600 mt-1">Enter your farm details for AI-based crop recommendations</p>
     </div>
 
@@ -57,19 +82,19 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Nitrogen (N)</label>
-                        <input type="number" id="nitrogen" name="nitrogen" value="80" step="1" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="nitrogen" name="nitrogen" value="80" step="1" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Phosphorus (P)</label>
-                        <input type="number" id="phosphorus" name="phosphorus" value="40" step="1" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="phosphorus" name="phosphorus" value="40" step="1" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Potassium (K)</label>
-                        <input type="number" id="potassium" name="potassium" value="40" step="1" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="potassium" name="potassium" value="40" step="1" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Soil pH</label>
-                        <input type="number" id="ph" name="ph" value="6.5" step="0.1" min="0" max="14" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="ph" name="ph" value="6.5" step="0.1" min="0" max="14" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                 </div>
                 
@@ -77,26 +102,26 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Temperature (°C)</label>
-                        <input type="number" id="temperature" name="temperature" value="25" step="0.1" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="temperature" name="temperature" value="25" step="0.1" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Humidity (%)</label>
-                        <input type="number" id="humidity" name="humidity" value="70" step="1" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="humidity" name="humidity" value="70" step="1" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Rainfall (mm)</label>
-                        <input type="number" id="rainfall" name="rainfall" value="200" step="10" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="rainfall" name="rainfall" value="200" step="10" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Land Size (acres)</label>
-                        <input type="number" id="landSize" name="landSize" value="10" step="0.5" class="w-full p-3 border rounded-lg" required>
+                        <input type="number" id="landSize" name="landSize" value="10" step="0.5" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                 </div>
                 
                 <!-- Budget -->
                 <div>
                     <label class="block text-sm text-gray-600 mb-1">Budget (₹)</label>
-                    <input type="number" id="budget" name="budget" value="200000" step="10000" class="w-full p-3 border rounded-lg" required>
+                    <input type="number" id="budget" name="budget" value="200000" step="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                 </div>
                 
                 <!-- Submit Button -->
@@ -148,6 +173,11 @@ async function checkConnection() {
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
                 <i class="fas fa-exclamation-triangle mr-2"></i>
                 ❌ Cannot connect to backend. Make sure server is running on port 5000
+                <div class="mt-2 text-sm">
+                    <button onclick="checkConnection()" class="bg-red-200 text-red-800 px-3 py-1 rounded hover:bg-red-300">
+                        <i class="fas fa-sync-alt mr-1"></i> Retry Connection
+                    </button>
+                </div>
             </div>
         `;
         return false;
@@ -210,8 +240,8 @@ document.getElementById('cropPlannerForm').addEventListener('submit', async func
                 <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
                 <p class="font-bold">Error occurred</p>
                 <p class="text-sm mt-2">${error.message}</p>
-                <button onclick="window.location.reload()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
-                    Try Again
+                <button onclick="window.location.reload()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    <i class="fas fa-redo-alt mr-2"></i>Try Again
                 </button>
             </div>
         `;
@@ -240,7 +270,7 @@ function displayResults(predictData, formData) {
         const colors = ['bg-green-50 border-green-500', 'bg-blue-50 border-blue-500', 'bg-yellow-50 border-yellow-500'];
         
         html += `
-            <div class="${colors[index]} border-l-4 p-4 rounded-lg">
+            <div class="${colors[index]} border-l-4 p-4 rounded-lg hover:shadow-md transition">
                 <div class="flex justify-between items-center">
                     <div>
                         <span class="text-2xl font-bold">${index + 1}.</span>
@@ -250,6 +280,16 @@ function displayResults(predictData, formData) {
                 </div>
                 <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
                     <div class="bg-green-600 h-2 rounded-full" style="width: ${confidence}%"></div>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="mt-3 flex space-x-2">
+                    <button onclick="alert('Learn more about ${crop} cultivation')" class="text-xs text-green-600 hover:text-green-700">
+                        <i class="fas fa-info-circle mr-1"></i>Details
+                    </button>
+                    <button onclick="alert('Save ${crop} to your farm plan')" class="text-xs text-blue-600 hover:text-blue-700">
+                        <i class="far fa-bookmark mr-1"></i>Save
+                    </button>
                 </div>
             </div>
         `;
@@ -262,16 +302,26 @@ function displayResults(predictData, formData) {
             <div class="bg-gray-50 p-4 rounded-lg mt-4">
                 <h4 class="font-semibold mb-2">📊 Your Farm Summary</h4>
                 <div class="grid grid-cols-2 gap-2 text-sm">
-                    <div>Land Size: ${formData.total_land} acres</div>
-                    <div>Budget: ₹${formData.budget.toLocaleString()}</div>
-                    <div>Soil pH: ${formData.ph}</div>
-                    <div>Temperature: ${formData.temperature}°C</div>
+                    <div><span class="text-gray-500">Land Size:</span> ${formData.total_land} acres</div>
+                    <div><span class="text-gray-500">Budget:</span> ₹${formData.budget.toLocaleString()}</div>
+                    <div><span class="text-gray-500">Soil pH:</span> ${formData.ph}</div>
+                    <div><span class="text-gray-500">Temperature:</span> ${formData.temperature}°C</div>
                 </div>
             </div>
             
             <p class="text-xs text-gray-500 text-center mt-4">
                 ${predictData.message || 'ML prediction successful'}
             </p>
+            
+            <!-- Export/Save Options -->
+            <div class="flex justify-center space-x-4 pt-4 border-t">
+                <button onclick="alert('Exporting results...')" class="text-sm text-gray-600 hover:text-green-600">
+                    <i class="fas fa-download mr-1"></i>Export PDF
+                </button>
+                <button onclick="alert('Saving to My Plans...')" class="text-sm text-gray-600 hover:text-green-600">
+                    <i class="far fa-save mr-1"></i>Save Plan
+                </button>
+            </div>
         </div>
     `;
     
@@ -282,12 +332,23 @@ function displayResults(predictData, formData) {
 window.onload = function() {
     checkConnection();
 };
+
+// Add keyboard shortcut (Ctrl/Cmd + B) to go back to dashboard
+document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+        e.preventDefault();
+        window.location.href = 'dashboard.html';
+    }
+});
 </script>
 
 <!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-12">
     <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
-        <p>© 2024 SmartCrop - ML Powered Farming Assistant</p>
+        <p>© 2024 VidhaiX - ML Powered Farming Assistant</p>
+        <p class="text-xs mt-2">
+            <i class="fas fa-arrow-left mr-1"></i> Use back button or <kbd class="bg-gray-800 px-2 py-1 rounded">Ctrl+B</kbd> to return to Dashboard
+        </p>
     </div>
 </footer>
 
