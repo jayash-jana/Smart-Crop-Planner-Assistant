@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Guide to Loamy Soil - SmartCrop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .progress-bar { 
+            height: 4px; 
+            background: linear-gradient(90deg, #16a34a var(--scroll), #e5e7eb 0);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+        .table-of-contents { position: sticky; top: 100px; }
+        .tip-box { background-color: #f0fdf4; border-left: 4px solid #16a34a; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-green-600 font-medium border-b-2 border-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-bar" style="--scroll: 0%"></div>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Back to Resources -->
+    <div class="mb-6">
+        <a href="resources.html" class="text-green-600 hover:text-green-700 flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Resources
+        </a>
+    </div>
+
+    <!-- Article Header -->
+    <div class="bg-gradient-to-r from-green-700 to-green-600 text-white rounded-2xl p-8 mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <span class="bg-green-500 text-white text-sm px-4 py-1 rounded-full">Soil Guide</span>
+            <div class="flex items-center space-x-4 text-sm">
+                <span><i class="far fa-clock mr-1"></i> 15 min read</span>
+                <span><i class="far fa-eye mr-1"></i> 2.5k reads</span>
+            </div>
+        </div>
+        <h1 class="text-4xl font-bold mb-2">Complete Guide to Loamy Soil</h1>
+        <p class="text-green-100 text-lg">Learn how to maximize your loamy soil for better yields</p>
+        
+        <!-- Author info -->
+        <div class="flex items-center mt-4">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-green-700"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-semibold">Dr. Sarah Johnson</p>
+                <p class="text-xs text-green-200">Soil Scientist • Updated March 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Table of Contents (sidebar) -->
+        <div class="lg:col-span-1">
+            <div class="table-of-contents bg-white p-6 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-list-ul text-green-600 mr-2"></i> In This Guide
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#what-is-loamy" class="text-gray-600 hover:text-green-600 flex items-center">• What is Loamy Soil?</a></li>
+                    <li><a href="#why-ideal" class="text-gray-600 hover:text-green-600 flex items-center">• Why Loamy Soil is Ideal</a></li>
+                    <li><a href="#composition" class="text-gray-600 hover:text-green-600 flex items-center">• Ideal Soil Composition</a></li>
+                    <li><a href="#maximize-yields" class="text-gray-600 hover:text-green-600 flex items-center">• How to Maximize Yields</a></li>
+                    <li><a href="#maintenance" class="text-gray-600 hover:text-green-600 flex items-center">• Maintenance Tips</a></li>
+                    <li><a href="#common-mistakes" class="text-gray-600 hover:text-green-600 flex items-center">• Common Mistakes to Avoid</a></li>
+                </ul>
+                
+                <!-- Download PDF -->
+                <div class="mt-6 pt-4 border-t">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Article Text -->
+        <div class="lg:col-span-3">
+            <div class="bg-white rounded-xl shadow-md p-8">
+                
+                <!-- What is Loamy Soil -->
+                <section id="what-is-loamy" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">What is Loamy Soil?</h2>
+                    <p class="text-gray-700 mb-4">Loamy soil represents the "Goldilocks" of soil types—not too sandy, not too clay-heavy, but just right. It's a balanced blend of sand, silt, and clay particles that creates the ideal growing environment for most plants.</p>
+                    <p class="text-gray-700">What makes loamy soil special is how these components work together. The largest sand particles allow good drainage, while the smallest clay particles help retain moisture and nutrients. Silt particles fill the spaces in between, creating a well-structured soil that resists compaction.</p>
+                </section>
+
+                <!-- Ideal Soil Composition -->
+                <section id="composition" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">The Ideal Soil Composition</h2>
+                    <div class="bg-blue-50 p-6 rounded-lg mb-4">
+                        <h3 class="font-semibold text-blue-800 mb-4">📊 Perfect Loamy Soil Contains:</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-yellow-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">45%</div>
+                                <p class="text-sm font-semibold">Minerals</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-blue-400 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">25%</div>
+                                <p class="text-sm font-semibold">Air</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">25%</div>
+                                <p class="text-sm font-semibold">Water</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-green-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">5%</div>
+                                <p class="text-sm font-semibold">Organic Matter</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Why Loamy Soil is Ideal -->
+                <section id="why-ideal" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Why Loamy Soil is Ideal for Farming</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <i class="fas fa-tint text-blue-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold mb-2">Excellent Drainage</h3>
+                            <p class="text-sm text-gray-600">Prevents waterlogging (which can suffocate plant roots) while retaining sufficient moisture to keep plants healthy between waterings.</p>
+                        </div>
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <i class="fas fa-leaf text-green-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold mb-2">Nutrient-Rich</h3>
+                            <p class="text-sm text-gray-600">Organic matter feeds beneficial soil microbes, creating a self-sustaining fertility cycle.</p>
+                        </div>
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <i class="fas fa-hand-peace text-yellow-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold mb-2">Easy to Work</h3>
+                            <p class="text-sm text-gray-600">Good "tilth" makes it simple to prepare seedbeds, pull weeds, and transplant seedlings.</p>
+                        </div>
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <i class="fas fa-tree text-green-700 text-xl mb-2"></i>
+                            <h3 class="font-semibold mb-2">Strong Root Development</h3>
+                            <p class="text-sm text-gray-600">Perfect aeration and moisture balance allows deep, extensive root growth for more resilient plants.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- How to Maximize Yields -->
+                <section id="maximize-yields" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Maximize Yields in Loamy Soil</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start bg-gray-50 p-4 rounded-lg">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">1</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Regular Soil Testing</h3>
+                                <p class="text-gray-600">Conduct a soil test every 2-3 years to check pH levels (target 6.0-7.0), nutrient levels, and organic matter content. This helps you make informed decisions about amendments.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-gray-50 p-4 rounded-lg">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">2</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Maintain Organic Matter</h3>
+                                <p class="text-gray-600">Add a 1-2 inch layer of compost annually to replenish organic matter depleted during the growing season. This feeds soil microbes and improves soil structure.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-gray-50 p-4 rounded-lg">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">3</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Practice Crop Rotation</h3>
+                                <p class="text-gray-600">Rotate between fruiting crops, root crops, leafy crops, and legumes to prevent nutrient depletion and disrupt pest and disease cycles.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-gray-50 p-4 rounded-lg">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">4</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Keep Soil Covered</h3>
+                                <p class="text-gray-600">Use mulch (straw, wood chips) or cover crops to prevent erosion, retain moisture, and suppress weeds. Bare soil is vulnerable to damage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Maintenance Tips -->
+                <section id="maintenance" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Essential Maintenance Tips</h2>
+                    
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="tip-box p-4 rounded-lg">
+                            <i class="fas fa-tint text-blue-500 mr-2"></i>
+                            <span class="font-semibold">Watering:</span> Water deeply but less frequently to encourage deep root growth. Loamy soil typically needs 1-1.5 inches of water per week.
+                        </div>
+                        
+                        <div class="tip-box p-4 rounded-lg">
+                            <i class="fas fa-cut text-green-500 mr-2"></i>
+                            <span class="font-semibold">Tilling:</span> Avoid over-tilling. Till only when necessary and when soil is moist but not wet to prevent compaction.
+                        </div>
+                        
+                        <div class="tip-box p-4 rounded-lg">
+                            <i class="fas fa-seedling text-green-600 mr-2"></i>
+                            <span class="font-semibold">Cover Crops:</span> Plant winter rye or clover in fall to protect soil over winter and add organic matter in spring.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Common Mistakes -->
+                <section id="common-mistakes" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Common Mistakes to Avoid</h2>
+                    
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li class="text-red-600"><span class="text-gray-700"><strong>Over-tilling</strong> - Destroys soil structure and harms beneficial organisms</span></li>
+                        <li class="text-red-600"><span class="text-gray-700"><strong>Working soil when wet</strong> - Causes compaction and damages soil structure</span></li>
+                        <li class="text-red-600"><span class="text-gray-700"><strong>Neglecting soil tests</strong> - Leads to improper fertilization and pH problems</span></li>
+                        <li class="text-red-600"><span class="text-gray-700"><strong>Not replenishing organic matter</strong> - Soil fertility declines over time</span></li>
+                        <li class="text-red-600"><span class="text-gray-700"><strong>Over-fertilizing</strong> - Can burn plants and harm soil life</span></li>
+                    </ul>
+                </section>
+
+                <!-- Summary Box -->
+                <div class="bg-green-50 border-l-4 border-green-600 p-4 rounded">
+                    <h3 class="font-bold text-green-800 mb-2">📌 Key Takeaways</h3>
+                    <ul class="space-y-1 text-sm text-green-700">
+                        <li>• Loamy soil is the ideal balance of sand, silt, and clay</li>
+                        <li>• Maintain organic matter with annual compost additions</li>
+                        <li>• Test soil every 2-3 years to monitor pH and nutrients</li>
+                        <li>• Use mulch and cover crops to protect soil</li>
+                        <li>• Practice crop rotation for long-term soil health</li>
+                    </ul>
+                </div>
+
+                <!-- Share buttons -->
+                <div class="mt-8 pt-6 border-t flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <button class="w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700"><i class="fab fa-facebook-f"></i></button>
+                        <button class="w-10 h-10 bg-blue-400 text-white rounded-full hover:bg-blue-500"><i class="fab fa-twitter"></i></button>
+                        <button class="w-10 h-10 bg-green-600 text-white rounded-full hover:bg-green-700"><i class="fab fa-whatsapp"></i></button>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📖 You Might Also Like</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-flask text-yellow-600 mb-2"></i>
+                <h3 class="font-semibold">Soil pH Management</h3>
+                <p class="text-xs text-gray-500 mt-1">Learn to maintain optimal pH levels</p>
+                <a href="phguide.html" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-leaf text-green-600 mb-2"></i>
+                <h3 class="font-semibold">5 Tips for Loamy Soil</h3>
+                <p class="text-xs text-gray-500 mt-1">Video tutorial series</p>
+                <a href="tipsguide.html" class="text-green-600 text-xs hover:underline block mt-2">Watch Video →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-calendar text-blue-600 mb-2"></i>
+                <h3 class="font-semibold">Seasonal Amendment Calendar</h3>
+                <p class="text-xs text-gray-500 mt-1">When to apply what</p>
+                <a href="#" class="text-green-600 text-xs hover:underline block mt-2">View →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2026 SmartCrop - Empowering Farmers with Knowledge</p>
+    </div>
+</footer>
+
+<!-- Scroll Progress Script -->
+<script>
+window.onscroll = function() {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.querySelector('.progress-bar').style.setProperty('--scroll', scrolled + '%');
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+</script>
+
+</body>
+</html>

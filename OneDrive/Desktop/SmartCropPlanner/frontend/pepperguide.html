@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pepper Cultivation Guide - SmartCrop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .progress-bar { 
+            height: 4px; 
+            background: linear-gradient(90deg, #16a34a var(--scroll), #e5e7eb 0);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+        .table-of-contents { position: sticky; top: 100px; }
+        .tip-box { background-color: #f0fdf4; border-left: 4px solid #16a34a; }
+        .heat-scale {
+            background: linear-gradient(90deg, #22c55e 0%, #eab308 50%, #ef4444 100%);
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-green-600 font-medium border-b-2 border-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-bar" style="--scroll: 0%"></div>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Back to Resources -->
+    <div class="mb-6">
+        <a href="resources.html" class="text-green-600 hover:text-green-700 flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Resources
+        </a>
+    </div>
+
+    <!-- Article Header -->
+    <div class="bg-gradient-to-r from-green-600 to-green-500 text-white rounded-2xl p-8 mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <span class="bg-green-700 text-white text-sm px-4 py-1 rounded-full">Crop Guide</span>
+            <div class="flex items-center space-x-4 text-sm">
+                <span><i class="far fa-clock mr-1"></i> 12 min read</span>
+                <span><i class="far fa-eye mr-1"></i> 2.8k reads</span>
+            </div>
+        </div>
+        <h1 class="text-4xl font-bold mb-2">Pepper Cultivation Guide</h1>
+        <p class="text-green-100 text-lg">Maximize yield with these expert techniques</p>
+        
+        <!-- Author info -->
+        <div class="flex items-center mt-4">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-green-600"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-semibold">Maria Garcia</p>
+                <p class="text-xs text-green-200">Pepper Specialist • Updated March 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Table of Contents -->
+        <div class="lg:col-span-1">
+            <div class="table-of-contents bg-white p-6 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-list-ul text-green-600 mr-2"></i> In This Guide
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#varieties" class="text-gray-600 hover:text-green-600 flex items-center">• Pepper Varieties</a></li>
+                    <li><a href="#planting" class="text-gray-600 hover:text-green-600 flex items-center">• Planting Guide</a></li>
+                    <li><a href="#soil" class="text-gray-600 hover:text-green-600 flex items-center">• Soil Requirements</a></li>
+                    <li><a href="#watering" class="text-gray-600 hover:text-green-600 flex items-center">• Watering Tips</a></li>
+                    <li><a href="#fertilizing" class="text-gray-600 hover:text-green-600 flex items-center">• Fertilizer Schedule</a></li>
+                    <li><a href="#pests" class="text-gray-600 hover:text-green-600 flex items-center">• Pest Control</a></li>
+                    <li><a href="#harvesting" class="text-gray-600 hover:text-green-600 flex items-center">• Harvesting</a></li>
+                </ul>
+                
+                <!-- Download PDF -->
+                <div class="mt-6 pt-4 border-t">
+                    <button class="w-full bg-gray-100 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-200">
+                        <i class="fas fa-download mr-2"></i> Download PDF Guide
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+            <div class="bg-white rounded-xl shadow-md p-8">
+                
+                <!-- Pepper Varieties -->
+                <section id="varieties" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🌶️ Popular Pepper Varieties</h2>
+                    
+                    <div class="heat-scale w-full mb-4"></div>
+                    <div class="flex justify-between text-xs text-gray-600 mb-4">
+                        <span class="text-green-600">Sweet</span>
+                        <span class="text-yellow-600">Medium</span>
+                        <span class="text-red-600">Hot</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-pepper-hot text-green-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Bell Pepper</h3>
+                            <p class="text-xs text-gray-500">Sweet • 65-75 days</p>
+                            <p class="text-xs mt-1">Green, red, yellow varieties</p>
+                        </div>
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-pepper-hot text-yellow-600 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Jalapeño</h3>
+                            <p class="text-xs text-gray-500">Medium • 70-80 days</p>
+                            <p class="text-xs mt-1">Moderate heat, versatile</p>
+                        </div>
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-pepper-hot text-red-600 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Habanero</h3>
+                            <p class="text-xs text-gray-500">Hot • 90-100 days</p>
+                            <p class="text-xs mt-1">Very hot, fruity flavor</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Planting Guide -->
+                <section id="planting" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🌱 Planting Guide</h2>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg mb-4">
+                        <h3 class="font-semibold text-green-800 mb-2">📅 When to Plant:</h3>
+                        <ul class="list-disc list-inside text-sm text-green-700">
+                            <li>Start seeds indoors: 8-10 weeks before last frost</li>
+                            <li>Transplant outdoors: 2-3 weeks after last frost</li>
+                            <li>Soil temperature: 65°F+ for best growth</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="font-semibold mb-2">📏 Spacing:</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-600">
+                                <li>Between plants: 18-24 inches</li>
+                                <li>Between rows: 24-36 inches</li>
+                                <li>Plant at same depth as container</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">☀️ Sun Requirements:</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-600">
+                                <li>Full sun: 6-8 hours daily</li>
+                                <li>Warm, sheltered location</li>
+                                <li>Protect from strong winds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Soil Requirements -->
+                <section id="soil" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🧪 Soil Requirements</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-yellow-50 p-4 rounded">
+                            <h3 class="font-semibold text-yellow-800 mb-2">Ideal Soil:</h3>
+                            <p class="text-sm">Well-draining, fertile loamy soil</p>
+                            <p class="text-sm mt-2">pH: 6.0 - 6.8 (Slightly acidic)</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded">
+                            <h3 class="font-semibold text-blue-800 mb-2">Soil Preparation:</h3>
+                            <ul class="list-disc list-inside text-sm">
+                                <li>Add 2-3 inches compost</li>
+                                <li>Well-rotted manure</li>
+                                <li>Good drainage essential</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Watering Tips -->
+                <section id="watering" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">💧 Watering Tips</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <span>Water deeply 1-2 times per week</span>
+                        </div>
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <span>Keep soil consistently moist, not waterlogged</span>
+                        </div>
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <span>Mulch to retain moisture</span>
+                        </div>
+                        <div class="flex items-center bg-red-50 p-3 rounded">
+                            <i class="fas fa-exclamation-triangle text-red-500 mr-3"></i>
+                            <span>Avoid overhead watering to prevent disease</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fertilizer Schedule -->
+                <section id="fertilizing" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🌿 Fertilizer Schedule</h2>
+                    
+                    <div class="bg-yellow-50 p-3 rounded mb-3">
+                        <p class="text-sm font-semibold">⚠️ Important: Avoid too much nitrogen - it leads to leafy growth but fewer peppers!</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">1</span>
+                            <div>
+                                <h3 class="font-semibold">At Planting</h3>
+                                <p class="text-sm text-gray-600">Mix compost and balanced fertilizer (5-10-10)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">2</span>
+                            <div>
+                                <h3 class="font-semibold">After First Flowers</h3>
+                                <p class="text-sm text-gray-600">Apply low-nitrogen fertilizer (0-10-10)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">3</span>
+                            <div>
+                                <h3 class="font-semibold">Every 4-6 Weeks</h3>
+                                <p class="text-sm text-gray-600">Side-dress with compost or organic fertilizer</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pest Control -->
+                <section id="pests" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🐛 Common Pests & Control</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Pest</th>
+                                    <th class="px-4 py-2 text-left">Damage</th>
+                                    <th class="px-4 py-2 text-left">Organic Control</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr><td class="px-4 py-2">Aphids</td><td class="px-4 py-2">Sticky leaves, stunted growth</td><td class="px-4 py-2">Neem oil, ladybugs</td></tr>
+                                <tr><td class="px-4 py-2">Hornworms</td><td class="px-4 py-2">Chewed leaves, fruit damage</td><td class="px-4 py-2">Handpick, BT spray</td></tr>
+                                <tr><td class="px-4 py-2">Spider Mites</td><td class="px-4 py-2">Yellow speckling on leaves</td><td class="px-4 py-2">Water spray, insecticidal soap</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Harvesting -->
+                <section id="harvesting" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🥫 Harvesting Guide</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded">
+                            <h3 class="font-semibold text-green-800 mb-2">When to Harvest:</h3>
+                            <ul class="list-disc list-inside text-sm">
+                                <li>Green stage: Mature but not fully ripe</li>
+                                <li>Color stage: Fully ripe (red, yellow, orange)</li>
+                                <li>Use sharp scissors or pruners</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded">
+                            <h3 class="font-semibold text-green-800 mb-2">Storage Tips:</h3>
+                            <ul class="list-disc list-inside text-sm">
+                                <li>Refrigerate: 1-2 weeks</li>
+                                <li>Freeze: 6-8 months</li>
+                                <li>Dry: For long-term storage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Tips Box -->
+                <div class="tip-box p-4 rounded-lg mt-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        Expert Tips for Maximum Yield
+                    </h3>
+                    <ul class="list-disc list-inside text-sm text-green-700">
+                        <li>Pinch off first flowers to encourage bushier growth</li>
+                        <li>Support plants with stakes or cages when heavy with fruit</li>
+                        <li>Harvest regularly to encourage more production</li>
+                        <li>Peppers turn sweeter as they ripen on the plant</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📖 You Might Also Like</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-apple-alt text-red-600 mb-2"></i>
+                <h3 class="font-semibold">Tomato Farming Guide</h3>
+                <p class="text-xs text-gray-500 mt-1">Complete growing guide</p>
+                <a href="tomatoguide.html" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-leaf text-green-600 mb-2"></i>
+                <h3 class="font-semibold">Soil Health Guide</h3>
+                <p class="text-xs text-gray-500 mt-1">Perfect soil for vegetables</p>
+                <a href="loamyguide.html" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-tint text-blue-600 mb-2"></i>
+                <h3 class="font-semibold">Water Management</h3>
+                <p class="text-xs text-gray-500 mt-1">Efficient irrigation techniques</p>
+                <a href="#" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll Progress Script -->
+<script>
+window.onscroll = function() {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.querySelector('.progress-bar').style.setProperty('--scroll', scrolled + '%');
+}
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2024 SmartCrop - Empowering Farmers with Knowledge</p>
+    </div>
+</footer>
+
+</body>
+</html>

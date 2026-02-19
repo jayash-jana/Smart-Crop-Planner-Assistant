@@ -89,7 +89,8 @@
                 <i class="fas fa-eye ml-3 mr-1"></i> 2.5k reads
             </div>
             <div class="flex space-x-2">
-                <button class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700">Read Guide</button>
+                <!-- FIXED: onclick on Read Guide button -->
+                <button onclick="window.location.href='loamyguide.html'" class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700">Read Guide</button>
                 <button class="p-2 border rounded-lg hover:bg-gray-50"><i class="far fa-bookmark"></i></button>
             </div>
         </div>
@@ -105,7 +106,8 @@
                 <i class="fas fa-clock mr-1"></i> 10 min read
                 <i class="fas fa-eye ml-3 mr-1"></i> 1.8k reads
             </div>
-            <button class="w-full border border-green-600 text-green-600 py-2 rounded-lg text-sm hover:bg-green-50">Read Guide</button>
+            <!-- FIXED: Added onclick -->
+            <button onclick="window.location.href='phguide.html'" class="w-full border border-green-600 text-green-600 py-2 rounded-lg text-sm hover:bg-green-50">Read Guide</button>
         </div>
         
         <!-- Guide 3: Organic Matter Tips -->
@@ -119,7 +121,8 @@
                 <i class="fas fa-clock mr-1"></i> 8 min video
                 <i class="fas fa-eye ml-3 mr-1"></i> 3.2k views
             </div>
-            <button class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700">
+            <!-- FIXED: Added onclick to open in new tab -->
+            <button onclick="window.open('tipsguide.html', '_blank')" class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700">
                 <i class="fas fa-play mr-1"></i> Watch Video
             </button>
         </div>
@@ -147,7 +150,8 @@
                         <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Pruning tips</span>
                         <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Fertilizer schedule</span>
                     </div>
-                    <button class="text-red-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
+                    <!-- FIXED: Added onclick -->
+                    <button onclick="window.location.href='tomatoguide.html'" class="text-red-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
                 </div>
             </div>
         </div>
@@ -166,7 +170,8 @@
                         <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Watering tips</span>
                         <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Harvesting</span>
                     </div>
-                    <button class="text-green-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
+                    <!-- FIXED: Added onclick -->
+                    <button onclick="window.location.href='pepperguide.html'" class="text-green-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
                 </div>
             </div>
         </div>
@@ -375,7 +380,8 @@
                 <span class="text-xs text-green-600 font-semibold">CROP ROTATION</span>
                 <h4 class="font-bold text-sm mt-1">Benefits of Crop Rotation</h4>
                 <p class="text-xs text-gray-500 mt-1">Learn how rotating crops improves soil health...</p>
-                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+                <!-- FIXED: Added onclick -->
+                <button onclick="window.location.href='blog-crop-rotation.html'" class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
             </div>
         </div>
         
@@ -386,7 +392,8 @@
                 <span class="text-xs text-green-600 font-semibold">ORGANIC FARMING</span>
                 <h4 class="font-bold text-sm mt-1">Natural Pest Control Methods</h4>
                 <p class="text-xs text-gray-500 mt-1">Chemical-free ways to protect your crops...</p>
-                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+                <!-- FIXED: Added onclick -->
+                <button onclick="window.location.href='blog-pest-control.html'" class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
             </div>
         </div>
         
@@ -397,25 +404,11 @@
                 <span class="text-xs text-green-600 font-semibold">MARKET TIPS</span>
                 <h4 class="font-bold text-sm mt-1">When to Sell for Best Price</h4>
                 <p class="text-xs text-gray-500 mt-1">Market timing strategies for maximum profit...</p>
-                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+                <!-- FIXED: Added onclick -->
+                <button onclick="window.location.href='blog-market-tips.html'" class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
             </div>
         </div>
     </div>
-
-    <!-- Newsletter Signup -->
-    <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-8 text-white">
-        <div class="text-center">
-            <h3 class="text-2xl font-bold mb-2">📧 Get Farming Tips in Your Inbox</h3>
-            <p class="text-green-100 mb-4">Weekly tips, guides, and market updates</p>
-            <div class="flex max-w-md mx-auto">
-                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-l-lg text-gray-800">
-                <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-r-lg font-semibold hover:bg-yellow-400">
-                    Subscribe
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- FAQ Toggle Script -->
 <script>
@@ -438,7 +431,7 @@ function toggleFAQ(id) {
 <!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-12">
     <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
-        <p>© 2024 SmartCrop - Empowering Farmers with Knowledge</p>
+        <p>© 2026 SmartCrop - Empowering Farmers with Knowledge</p>
     </div>
 </footer>
 
