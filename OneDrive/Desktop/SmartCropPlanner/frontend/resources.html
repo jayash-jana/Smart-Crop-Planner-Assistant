@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - SmartCrop Learning Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .resource-card { transition: all 0.3s ease; }
+        .resource-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .video-thumbnail { position: relative; overflow: hidden; }
+        .video-thumbnail:hover .play-icon { transform: scale(1.1); }
+        .bg-brown-100 { background-color: #f4e6d2; }
+        .text-brown-600 { color: #8b5a2b; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-green-600 font-medium border-b-2 border-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">📚 Farming Knowledge Hub</h1>
+        <p class="text-gray-600 mt-1">Personalized learning resources based on your farm data</p>
+    </div>
+
+    <!-- Personalized Welcome (Based on User Data) -->
+    <div class="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-2xl p-6 mb-8">
+        <div class="flex items-center">
+            <i class="fas fa-user-graduate text-4xl mr-4"></i>
+            <div>
+                <h2 class="text-xl font-bold">Recommended for Your Farm</h2>
+                <p class="text-green-100">Based on your soil type (Loamy) and crops (Tomatoes, Peppers)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 1: SOIL GUIDES (Personalized) ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-mountain bg-brown-100 p-2 rounded-lg text-brown-600 mr-2"></i>
+        Soil Guides - Based on Your Soil Type
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        
+        <!-- Guide 1: Loamy Soil Guide (Personalized) -->
+        <div class="bg-white rounded-xl shadow-md p-6 resource-card border-l-4 border-green-500">
+            <div class="flex justify-between items-start mb-3">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-book-open text-green-600 text-xl"></i>
+                </div>
+                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Your Soil Type</span>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Complete Guide to Loamy Soil</h3>
+            <p class="text-gray-600 text-sm mb-3">Learn how to maximize your loamy soil for better yields</p>
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <i class="fas fa-clock mr-1"></i> 15 min read
+                <i class="fas fa-eye ml-3 mr-1"></i> 2.5k reads
+            </div>
+            <div class="flex space-x-2">
+                <button class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700">Read Guide</button>
+                <button class="p-2 border rounded-lg hover:bg-gray-50"><i class="far fa-bookmark"></i></button>
+            </div>
+        </div>
+        
+        <!-- Guide 2: Soil pH Management -->
+        <div class="bg-white rounded-xl shadow-md p-6 resource-card">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
+                <i class="fas fa-flask text-yellow-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Soil pH Management</h3>
+            <p class="text-gray-600 text-sm mb-3">How to adjust and maintain optimal pH levels (6.5-7.0)</p>
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <i class="fas fa-clock mr-1"></i> 10 min read
+                <i class="fas fa-eye ml-3 mr-1"></i> 1.8k reads
+            </div>
+            <button class="w-full border border-green-600 text-green-600 py-2 rounded-lg text-sm hover:bg-green-50">Read Guide</button>
+        </div>
+        
+        <!-- Guide 3: Organic Matter Tips -->
+        <div class="bg-white rounded-xl shadow-md p-6 resource-card">
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
+                <i class="fas fa-leaf text-green-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">5 Tips for Loamy Soil</h3>
+            <p class="text-gray-600 text-sm mb-3">Video tutorial: Expert tips for maintaining soil health</p>
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <i class="fas fa-clock mr-1"></i> 8 min video
+                <i class="fas fa-eye ml-3 mr-1"></i> 3.2k views
+            </div>
+            <button class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700">
+                <i class="fas fa-play mr-1"></i> Watch Video
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 2: CROP-SPECIFIC GUIDES (Based on Your Crops) ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-seedling bg-green-100 p-2 rounded-lg text-green-600 mr-2"></i>
+        Crop Guides - Based on Your Planned Crops
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        
+        <!-- Tomato Guide -->
+        <div class="bg-white rounded-xl shadow-md p-6 resource-card border-l-4 border-red-500">
+            <div class="flex items-start">
+                <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-apple-alt text-red-600 text-3xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-1">Tomato Farming Guide</h3>
+                    <p class="text-sm text-gray-600 mb-2">Complete growing guide from planting to harvest</p>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Disease control</span>
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Pruning tips</span>
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Fertilizer schedule</span>
+                    </div>
+                    <button class="text-red-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pepper Guide -->
+        <div class="bg-white rounded-xl shadow-md p-6 resource-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-pepper-hot text-green-600 text-3xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-1">Pepper Cultivation Guide</h3>
+                    <p class="text-sm text-gray-600 mb-2">Maximize yield with these expert techniques</p>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Pest control</span>
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Watering tips</span>
+                        <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Harvesting</span>
+                    </div>
+                    <button class="text-green-600 text-sm font-semibold hover:underline">Read Full Guide →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 3: SEASONAL PLANNING ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-calendar-alt bg-blue-100 p-2 rounded-lg text-blue-600 mr-2"></i>
+        Seasonal Planning - Spring 2024
+    </h2>
+    
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <!-- Planting Calendar -->
+            <div class="border-r pr-6">
+                <h3 class="font-bold mb-3 flex items-center">
+                    <i class="fas fa-calendar-check text-green-600 mr-2"></i>
+                    Planting Calendar
+                </h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span>Tomatoes</span>
+                        <span class="text-green-600">March 15 - April 15</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Peppers</span>
+                        <span class="text-green-600">March 20 - April 20</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Corn</span>
+                        <span class="text-green-600">April 1 - May 1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Harvest Calendar -->
+            <div class="border-r pr-6">
+                <h3 class="font-bold mb-3 flex items-center">
+                    <i class="fas fa-harvest text-yellow-600 mr-2"></i>
+                    Expected Harvest
+                </h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span>Tomatoes</span>
+                        <span class="text-yellow-600">June - July</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Peppers</span>
+                        <span class="text-yellow-600">June - August</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Corn</span>
+                        <span class="text-yellow-600">August</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Weather-Based Tips -->
+            <div>
+                <h3 class="font-bold mb-3 flex items-center">
+                    <i class="fas fa-cloud-sun text-blue-600 mr-2"></i>
+                    This Week's Tips
+                </h3>
+                <ul class="text-sm space-y-2 text-gray-600">
+                    <li><i class="fas fa-check text-green-500 mr-2"></i>Prepare soil for tomatoes</li>
+                    <li><i class="fas fa-check text-green-500 mr-2"></i>Order seeds for peppers</li>
+                    <li><i class="fas fa-exclamation text-yellow-500 mr-2"></i>Protect from late frost</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 4: VIDEO TUTORIALS ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-video bg-purple-100 p-2 rounded-lg text-purple-600 mr-2"></i>
+        Video Tutorials
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        
+        <!-- Video 1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <div class="video-thumbnail h-32 bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c7b1b?w=300&h=150&fit=crop" alt="Video thumbnail" class="w-full h-full object-cover opacity-80">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-play-circle text-white text-4xl play-icon transition"></i>
+                </div>
+            </div>
+            <div class="p-3">
+                <h4 class="font-semibold text-sm">Soil Preparation Tips</h4>
+                <p class="text-xs text-gray-500">12 min • 2.5k views</p>
+            </div>
+        </div>
+        
+        <!-- Video 2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <div class="video-thumbnail h-32 bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c7b1b?w=300&h=150&fit=crop&bw=1" alt="Video thumbnail" class="w-full h-full object-cover opacity-80">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-play-circle text-white text-4xl play-icon transition"></i>
+                </div>
+            </div>
+            <div class="p-3">
+                <h4 class="font-semibold text-sm">Pest Control for Tomatoes</h4>
+                <p class="text-xs text-gray-500">8 min • 1.8k views</p>
+            </div>
+        </div>
+        
+        <!-- Video 3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <div class="video-thumbnail h-32 bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c7b1b?w=300&h=150&fit=crop&bw=2" alt="Video thumbnail" class="w-full h-full object-cover opacity-80">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-play-circle text-white text-4xl play-icon transition"></i>
+                </div>
+            </div>
+            <div class="p-3">
+                <h4 class="font-semibold text-sm">Organic Fertilizer Guide</h4>
+                <p class="text-xs text-gray-500">15 min • 3.2k views</p>
+            </div>
+        </div>
+        
+        <!-- Video 4 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <div class="video-thumbnail h-32 bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c7b1b?w=300&h=150&fit=crop&bw=3" alt="Video thumbnail" class="w-full h-full object-cover opacity-80">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-play-circle text-white text-4xl play-icon transition"></i>
+                </div>
+            </div>
+            <div class="p-3">
+                <h4 class="font-semibold text-sm">Water Management</h4>
+                <p class="text-xs text-gray-500">10 min • 1.2k views</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 5: FAQ ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-question-circle bg-orange-100 p-2 rounded-lg text-orange-600 mr-2"></i>
+        Frequently Asked Questions
+    </h2>
+    
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <div class="space-y-4">
+            
+            <!-- FAQ 1 -->
+            <div class="border-b pb-3">
+                <button class="flex justify-between items-center w-full text-left font-semibold" onclick="toggleFAQ(1)">
+                    <span>How often should I water my tomatoes?</span>
+                    <i class="fas fa-chevron-down text-gray-400" id="faq-icon-1"></i>
+                </button>
+                <div id="faq-answer-1" class="hidden mt-2 text-gray-600 text-sm">
+                    Tomatoes need 1-2 inches of water per week. Water deeply 2-3 times per week rather than light daily watering. This encourages deep root growth.
+                </div>
+            </div>
+            
+            <!-- FAQ 2 -->
+            <div class="border-b pb-3">
+                <button class="flex justify-between items-center w-full text-left font-semibold" onclick="toggleFAQ(2)">
+                    <span>What's the best fertilizer for peppers?</span>
+                    <i class="fas fa-chevron-down text-gray-400" id="faq-icon-2"></i>
+                </button>
+                <div id="faq-answer-2" class="hidden mt-2 text-gray-600 text-sm">
+                    Peppers respond well to balanced fertilizers (10-10-10). Apply at planting time and again when fruits start to form. Avoid too much nitrogen.
+                </div>
+            </div>
+            
+            <!-- FAQ 3 -->
+            <div class="border-b pb-3">
+                <button class="flex justify-between items-center w-full text-left font-semibold" onclick="toggleFAQ(3)">
+                    <span>How do I know if my soil pH is correct?</span>
+                    <i class="fas fa-chevron-down text-gray-400" id="faq-icon-3"></i>
+                </button>
+                <div id="faq-answer-3" class="hidden mt-2 text-gray-600 text-sm">
+                    Most vegetables prefer pH 6.0-7.0. You can test using our soil test kit or send samples to your local extension office.
+                </div>
+            </div>
+            
+            <!-- FAQ 4 -->
+            <div>
+                <button class="flex justify-between items-center w-full text-left font-semibold" onclick="toggleFAQ(4)">
+                    <span>When should I start seeds indoors?</span>
+                    <i class="fas fa-chevron-down text-gray-400" id="faq-icon-4"></i>
+                </button>
+                <div id="faq-answer-4" class="hidden mt-2 text-gray-600 text-sm">
+                    Start tomatoes and peppers 6-8 weeks before last frost date. For spring planting, that's typically late February to early March.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 6: BLOG ARTICLES ===== -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-blog bg-indigo-100 p-2 rounded-lg text-indigo-600 mr-2"></i>
+        Latest from Our Blog
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        
+        <!-- Blog Post 1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=400&h=200&fit=crop" alt="Blog image" class="w-full h-32 object-cover">
+            <div class="p-4">
+                <span class="text-xs text-green-600 font-semibold">CROP ROTATION</span>
+                <h4 class="font-bold text-sm mt-1">Benefits of Crop Rotation</h4>
+                <p class="text-xs text-gray-500 mt-1">Learn how rotating crops improves soil health...</p>
+                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+            </div>
+        </div>
+        
+        <!-- Blog Post 2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=200&fit=crop" alt="Blog image" class="w-full h-32 object-cover">
+            <div class="p-4">
+                <span class="text-xs text-green-600 font-semibold">ORGANIC FARMING</span>
+                <h4 class="font-bold text-sm mt-1">Natural Pest Control Methods</h4>
+                <p class="text-xs text-gray-500 mt-1">Chemical-free ways to protect your crops...</p>
+                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+            </div>
+        </div>
+        
+        <!-- Blog Post 3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden resource-card">
+            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=200&fit=crop" alt="Blog image" class="w-full h-32 object-cover">
+            <div class="p-4">
+                <span class="text-xs text-green-600 font-semibold">MARKET TIPS</span>
+                <h4 class="font-bold text-sm mt-1">When to Sell for Best Price</h4>
+                <p class="text-xs text-gray-500 mt-1">Market timing strategies for maximum profit...</p>
+                <button class="mt-2 text-green-600 text-xs hover:underline">Read More →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-8 text-white">
+        <div class="text-center">
+            <h3 class="text-2xl font-bold mb-2">📧 Get Farming Tips in Your Inbox</h3>
+            <p class="text-green-100 mb-4">Weekly tips, guides, and market updates</p>
+            <div class="flex max-w-md mx-auto">
+                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-l-lg text-gray-800">
+                <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-r-lg font-semibold hover:bg-yellow-400">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Toggle Script -->
+<script>
+function toggleFAQ(id) {
+    const answer = document.getElementById('faq-answer-' + id);
+    const icon = document.getElementById('faq-icon-' + id);
+    
+    if (answer.classList.contains('hidden')) {
+        answer.classList.remove('hidden');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    } else {
+        answer.classList.add('hidden');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+    }
+}
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2024 SmartCrop - Empowering Farmers with Knowledge</p>
+    </div>
+</footer>
+
+</body>
+</html>
