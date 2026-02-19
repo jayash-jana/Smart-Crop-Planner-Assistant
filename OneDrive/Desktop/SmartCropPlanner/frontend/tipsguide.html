@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Tips for Loamy Soil - Video Tutorial - SmartCrop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+        .tip-card { transition: all 0.3s ease; }
+        .tip-card:hover { transform: translateX(5px); }
+        .progress-bar { 
+            height: 4px; 
+            background: linear-gradient(90deg, #16a34a var(--scroll), #e5e7eb 0);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+        .video-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .video-tab:hover {
+            background-color: #f3f4f6;
+        }
+        .video-tab.active {
+            background-color: #16a34a;
+            color: white;
+        }
+        .video-tab.active:hover {
+            background-color: #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-green-600 font-medium border-b-2 border-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-bar" style="--scroll: 0%"></div>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Back to Resources -->
+    <div class="mb-6">
+        <a href="resources.html" class="text-green-600 hover:text-green-700 flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Resources
+        </a>
+    </div>
+
+    <!-- Article Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-2xl p-8 mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <span class="bg-red-500 text-white text-sm px-4 py-1 rounded-full flex items-center">
+                <i class="fas fa-play mr-1"></i> Video Tutorial Series
+            </span>
+            <div class="flex items-center space-x-4 text-sm">
+                <span><i class="far fa-clock mr-1"></i> 5 videos • 45 min total</span>
+                <span><i class="far fa-eye mr-1"></i> 3.2k views</span>
+            </div>
+        </div>
+        <h1 class="text-4xl font-bold mb-2">5 Tips for Loamy Soil</h1>
+        <p class="text-blue-100 text-lg">Expert video tutorials for maintaining soil health</p>
+        
+        <!-- Author info -->
+        <div class="flex items-center mt-4">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-blue-600"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-semibold">Farmer John & Expert Contributors</p>
+                <p class="text-xs text-blue-200">20+ years farming experience • Updated March 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Tabs / Playlist -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📺 Video Playlist: 5 Essential Tips</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
+            <button onclick="changeVideo('6n3DOnTWZCA', 'Soil Food Web Explained', '8:24', 'Garden Fundamentals', 1)" class="video-tab active p-3 rounded-lg text-center" id="tab1">
+                <span class="block font-bold">Tip 1</span>
+                <span class="text-xs">Soil Food Web</span>
+            </button>
+            <button onclick="changeVideo('kHm2cWfliX4', 'Composting for Beginners', '12:15', 'Epic Gardening', 2)" class="video-tab p-3 rounded-lg text-center hover:bg-gray-100" id="tab2">
+                <span class="block font-bold">Tip 2</span>
+                <span class="text-xs">Composting</span>
+            </button>
+            <button onclick="changeVideo('xNIfDfqRfYs', 'Mulching Masterclass', '7:30', 'GrowVeg', 3)" class="video-tab p-3 rounded-lg text-center hover:bg-gray-100" id="tab3">
+                <span class="block font-bold">Tip 3</span>
+                <span class="text-xs">Mulching</span>
+            </button>
+            <button onclick="changeVideo('A6Aue1y4dYk', 'Cover Crops Guide', '9:45', 'No-Till Growers', 4)" class="video-tab p-3 rounded-lg text-center hover:bg-gray-100" id="tab4">
+                <span class="block font-bold">Tip 4</span>
+                <span class="text-xs">Cover Crops</span>
+            </button>
+            <button onclick="changeVideo('cJXq6VKnq4I', 'No-Till Gardening Basics', '10:20', 'Charles Dowding', 5)" class="video-tab p-3 rounded-lg text-center hover:bg-gray-100" id="tab5">
+                <span class="block font-bold">Tip 5</span>
+                <span class="text-xs">No-Till</span>
+            </button>
+        </div>
+
+        <!-- Video Player Section -->
+        <div class="bg-gray-900 rounded-xl overflow-hidden mb-4">
+            <div class="video-wrapper">
+                <iframe id="mainVideo" src="" title="Soil Food Web" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Video Info -->
+        <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+                <h3 id="videoTitle" class="text-xl font-bold text-gray-800">Soil Food Web Explained</h3>
+                <p id="videoSource" class="text-sm text-gray-500">Source: Garden Fundamentals • 8:24 minutes</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="simulateLike()" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">
+                    <i class="fas fa-thumbs-up mr-1"></i> <span id="likeCount">234</span> Likes
+                </button>
+                <button onclick="shareVideo()" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-200">
+                    <i class="fas fa-share mr-1"></i> Share
+                </button>
+                <button onclick="saveVideo()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">
+                    <i class="fas fa-bookmark mr-1"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Grid with Video-Specific Content -->
+    <div class="grid grid-cols-1 gap-6 mb-8">
+        
+        <!-- Tip 1: Soil Food Web -->
+        <div id="tip1" class="bg-white rounded-xl shadow-md p-6 tip-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <span class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">1</span>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">Feed Your Soil Food Web</h3>
+                    <p class="text-gray-600 mb-3">Healthy soil teems with life. One teaspoon of good soil contains between 100 million and 1 billion bacteria, plus countless fungi, protozoa, and beneficial nematodes.</p>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg mb-3">
+                        <h4 class="font-semibold text-green-800 mb-2">✅ How to Support Soil Organisms:</h4>
+                        <ul class="list-disc list-inside text-sm text-green-700 space-y-1">
+                            <li>Add organic matter regularly—it's food for microbes</li>
+                            <li>Avoid over-tilling, which disrupts fungal networks</li>
+                            <li>Use organic fertilizers like compost, not harsh chemicals</li>
+                            <li>Remember: "Feed the soil—let the soil feed the plants"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 italic">
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> Video: "Soil Food Web Explained" (8:24)
+                        </p>
+                        <button onclick="changeVideo('6n3DOnTWZCA', 'Soil Food Web Explained', '8:24', 'Garden Fundamentals', 1)" class="text-green-600 text-sm hover:underline">
+                            Watch Now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 2: Composting -->
+        <div id="tip2" class="bg-white rounded-xl shadow-md p-6 tip-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <span class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">2</span>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">Master the Art of Composting</h3>
+                    <p class="text-gray-600 mb-3">Compost is the single best amendment for loamy soil. It improves structure, adds nutrients, and supports beneficial organisms.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                        <div class="bg-yellow-50 p-3 rounded">
+                            <h4 class="font-semibold text-yellow-800 mb-1">🌾 Brown Materials (Carbon)</h4>
+                            <p class="text-xs">Dried leaves, straw, wood chips, paper</p>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded">
+                            <h4 class="font-semibold text-green-800 mb-1">🌿 Green Materials (Nitrogen)</h4>
+                            <p class="text-xs">Grass clippings, vegetable scraps, coffee grounds</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-3 rounded mb-3">
+                        <h4 class="font-semibold text-blue-800 mb-1">📋 Composting Tips:</h4>
+                        <ul class="list-disc list-inside text-sm text-blue-700">
+                            <li>Layer browns and greens alternately</li>
+                            <li>Keep moist like a wrung-out sponge</li>
+                            <li>Turn monthly for faster decomposition</li>
+                            <li>Apply 2-3 inches annually to soil</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 italic">
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> Video: "Composting for Beginners" (12:15)
+                        </p>
+                        <button onclick="changeVideo('kHm2cWfliX4', 'Composting for Beginners', '12:15', 'Epic Gardening', 2)" class="text-green-600 text-sm hover:underline">
+                            Watch Now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 3: Mulching -->
+        <div id="tip3" class="bg-white rounded-xl shadow-md p-6 tip-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <span class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">3</span>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">Use Organic Mulch Strategically</h3>
+                    <p class="text-gray-600 mb-3">Mulch provides multiple benefits for your soil health.</p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                        <div class="text-center p-2 bg-gray-50 rounded">
+                            <i class="fas fa-tint text-blue-500 text-xl"></i>
+                            <p class="text-xs mt-1">Retains moisture</p>
+                        </div>
+                        <div class="text-center p-2 bg-gray-50 rounded">
+                            <i class="fas fa-thermometer-half text-red-500 text-xl"></i>
+                            <p class="text-xs mt-1">Regulates temperature</p>
+                        </div>
+                        <div class="text-center p-2 bg-gray-50 rounded">
+                            <i class="fas fa-ban text-green-500 text-xl"></i>
+                            <p class="text-xs mt-1">Suppresses weeds</p>
+                        </div>
+                        <div class="text-center p-2 bg-gray-50 rounded">
+                            <i class="fas fa-leaf text-green-600 text-xl"></i>
+                            <p class="text-xs mt-1">Adds organic matter</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-semibold mt-3 mb-2">Best Mulch Materials:</h4>
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">🍂 Shredded leaves</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">🌾 Straw</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Wood chips</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">🌱 Grass clippings</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 italic">
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> Video: "Mulching Masterclass" (7:30)
+                        </p>
+                        <button onclick="changeVideo('xNIfDfqRfYs', 'Mulching Masterclass', '7:30', 'GrowVeg', 3)" class="text-green-600 text-sm hover:underline">
+                            Watch Now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 4: Cover Crops -->
+        <div id="tip4" class="bg-white rounded-xl shadow-md p-6 tip-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <span class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">4</span>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">Protect Soil with Cover Crops</h3>
+                    <p class="text-gray-600 mb-3">Cover crops (also called "green manure") are plants grown specifically to improve soil between main crops.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                        <div>
+                            <h4 class="font-semibold text-green-700 mb-2">Benefits:</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Prevent erosion</li>
+                                <li>Suppress weeds</li>
+                                <li>Add organic matter</li>
+                                <li>Fix nitrogen (legumes)</li>
+                                <li>Break up compacted soil</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-green-700 mb-2">Best Cover Crops:</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Winter rye (cold-hardy)</li>
+                                <li>Crimson clover (nitrogen-fixing)</li>
+                                <li>Buckwheat (quick summer cover)</li>
+                                <li>Hairy vetch (excellent nitrogen)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 italic">
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> Video: "Cover Crops Guide" (9:45)
+                        </p>
+                        <button onclick="changeVideo('A6Aue1y4dYk', 'Cover Crops Guide', '9:45', 'No-Till Growers', 4)" class="text-green-600 text-sm hover:underline">
+                            Watch Now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 5: No-Till -->
+        <div id="tip5" class="bg-white rounded-xl shadow-md p-6 tip-card border-l-4 border-green-500">
+            <div class="flex items-start">
+                <span class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">5</span>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2">Practice No-Till Methods</h3>
+                    <p class="text-gray-600 mb-3">Excessive tilling destroys soil structure, disrupts fungal networks, and speeds up organic matter decomposition.</p>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg mb-3">
+                        <h4 class="font-semibold text-green-800 mb-2">🌱 No-Till Approaches:</h4>
+                        <ul class="list-disc list-inside text-sm text-green-700">
+                            <li>Use a shovel or rake to scratch in compost - no deep tillage needed</li>
+                            <li>Leave plant roots in ground after harvesting</li>
+                            <li>Use mulching mower that returns clippings to soil</li>
+                            <li>Mulch fall leaves directly into lawn rather than bagging</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-3 rounded mb-3">
+                        <h4 class="font-semibold text-blue-800 mb-1">📊 Results of No-Till:</h4>
+                        <p class="text-sm">Better soil structure, increased organic matter, improved water infiltration, enhanced microbial activity, less work for you!</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 italic">
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> Video: "No-Till Gardening Basics" (10:20)
+                        </p>
+                        <button onclick="changeVideo('cJXq6VKnq4I', 'No-Till Gardening Basics', '10:20', 'Charles Dowding', 5)" class="text-green-600 text-sm hover:underline">
+                            Watch Now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discussion / Comments Section -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-comments text-green-600 mr-2"></i>
+            Discussion (15 comments)
+        </h2>
+        
+        <!-- Sample Comments -->
+        <div class="space-y-4 mb-6">
+            <div class="flex space-x-3">
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <span class="font-bold text-green-600">JD</span>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                        <h5 class="font-semibold text-sm">John Doe</h5>
+                        <span class="text-xs text-gray-500">2 days ago</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Great tips! The no-till method really improved my soil structure.</p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span class="font-bold text-blue-600">MS</span>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                        <h5 class="font-semibold text-sm">Mary Smith</h5>
+                        <span class="text-xs text-gray-500">5 days ago</span>
+                    </div>
+                    <p class="text-sm text-gray-600">What ratio of brown to green materials for compost?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Comment -->
+        <div class="border-t pt-4">
+            <textarea id="commentInput" placeholder="Ask a question or share your experience..." class="w-full border rounded-lg p-3 text-sm" rows="2"></textarea>
+            <button onclick="addComment()" class="mt-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Post Comment</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Video Switching and Interactions -->
+<script>
+let likeCount = 234;
+
+function changeVideo(videoId, title, duration, source, tipNumber) {
+    // Update video source
+    document.getElementById('mainVideo').src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+    
+    // Update video info
+    document.getElementById('videoTitle').innerText = title;
+    document.getElementById('videoSource').innerHTML = 'Source: ' + source + ' • ' + duration;
+    
+    // Update active tab
+    for(let i = 1; i <= 5; i++) {
+        let tab = document.getElementById('tab' + i);
+        tab.classList.remove('active', 'bg-green-600', 'text-white');
+        tab.classList.add('hover:bg-gray-100');
+    }
+    let activeTab = document.getElementById('tab' + tipNumber);
+    activeTab.classList.add('active', 'bg-green-600', 'text-white');
+    activeTab.classList.remove('hover:bg-gray-100');
+    
+    // Smooth scroll to video
+    document.querySelector('.video-wrapper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function simulateLike() {
+    likeCount++;
+    document.getElementById('likeCount').innerText = likeCount;
+    
+    // Visual feedback
+    let likeBtn = event.currentTarget;
+    likeBtn.innerHTML = '<i class="fas fa-thumbs-up mr-1"></i> ' + likeCount + ' Liked!';
+    likeBtn.classList.add('bg-red-700');
+    
+    setTimeout(() => {
+        likeBtn.innerHTML = '<i class="fas fa-thumbs-up mr-1"></i> ' + likeCount + ' Likes';
+        likeBtn.classList.remove('bg-red-700');
+    }, 2000);
+}
+
+function shareVideo() {
+    alert('Link copied to clipboard! Share this video with your farming friends.');
+}
+
+function saveVideo() {
+    let saveBtn = event.currentTarget;
+    saveBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Saved!';
+    saveBtn.classList.add('bg-green-800');
+    
+    setTimeout(() => {
+        saveBtn.innerHTML = '<i class="fas fa-bookmark mr-1"></i> Save';
+        saveBtn.classList.remove('bg-green-800');
+    }, 2000);
+}
+
+function addComment() {
+    let comment = document.getElementById('commentInput').value;
+    if(comment.trim() === '') {
+        alert('Please enter a comment!');
+        return;
+    }
+    alert('Comment posted: ' + comment);
+    document.getElementById('commentInput').value = '';
+}
+
+// Scroll progress
+window.onscroll = function() {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.querySelector('.progress-bar').style.setProperty('--scroll', scrolled + '%');
+}
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2024 SmartCrop - Empowering Farmers with Knowledge</p>
+    </div>
+</footer>
+
+</body>
+</html>
