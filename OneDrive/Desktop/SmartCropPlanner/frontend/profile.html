@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile & Farm Plans - SmartCrop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .stat-card { transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .plan-card { transition: all 0.3s ease; }
+        .plan-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .active-tab { border-bottom: 3px solid #16a34a; color: #16a34a; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-green-600">Home</a>
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-gray-600 hover:text-green-600">Resources</a>
+                <a href="profile-farm-plans.html" class="text-green-600 font-medium border-b-2 border-green-600">Profile & Plans</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Header with Welcome -->
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">👤 Profile & Farm Plans</h1>
+            <p class="text-gray-600 mt-1">Manage your profile and view all your farm plans</p>
+        </div>
+        <div class="flex space-x-3">
+            <button onclick="exportData()" class="bg-white border border-green-600 text-green-600 px-4 py-2 rounded-lg text-sm hover:bg-green-50">
+                <i class="fas fa-download mr-2"></i>Export Data
+            </button>
+            <button onclick="showNotification('Creating new farm plan...')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">
+                <i class="fas fa-plus mr-2"></i>New Farm Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl shadow-md p-4 stat-card">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-tractor text-blue-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-gray-500">Active Farms</p>
+                    <p class="text-2xl font-bold" id="activeFarms">3</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-4 stat-card">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-seedling text-green-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-gray-500">Active Crops</p>
+                    <p class="text-2xl font-bold" id="activeCrops">12</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-4 stat-card">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-calendar-check text-yellow-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-gray-500">Plans Created</p>
+                    <p class="text-2xl font-bold" id="totalPlans">8</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-4 stat-card">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-clock text-purple-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-gray-500">Growing Days</p>
+                    <p class="text-2xl font-bold" id="growingDays">156</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two Column Layout: Profile + Stats (without graph) -->
+    <div class="grid lg:grid-cols-3 gap-8 mb-8">
+        
+        <!-- LEFT: Profile Information -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <div class="text-center mb-6">
+                    <div class="relative inline-block">
+                        <div class="w-32 h-32 bg-gradient-to-r from-green-400 to-green-600 rounded-full mx-auto flex items-center justify-center text-white text-5xl font-bold border-4 border-white shadow-lg">
+                            <span id="userInitials">SM</span>
+                        </div>
+                        <button onclick="changePhoto()" class="absolute bottom-0 right-0 bg-white text-green-600 p-2 rounded-full shadow-lg hover:bg-green-50">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <h2 class="text-2xl font-bold mt-4" id="userName">Sammer Maheshwari</h2>
+                    <p class="text-gray-500" id="userLocation">📍 Ahmedabad, Gujarat</p>
+                    <p class="text-sm text-gray-400 mt-1" id="userMemberSince">Member since Jan 2025</p>
+                </div>
+
+                <!-- Profile Stats -->
+                <div class="border-t pt-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600"><i class="fas fa-envelope text-green-600 w-6"></i> Email</span>
+                        <span class="font-medium" id="userEmail">sammer.maheshwari2212@gmail.com</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600"><i class="fas fa-phone text-green-600 w-6"></i> Phone</span>
+                        <span class="font-medium" id="userPhone">+91 9876543210</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600"><i class="fas fa-map-marker-alt text-green-600 w-6"></i> Region</span>
+                        <span class="font-medium" id="userRegion">Jamalpur</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600"><i class="fas fa-tint text-green-600 w-6"></i> Soil Type</span>
+                        <span class="font-medium" id="userSoilType">Loamy</span>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Button -->
+                <button onclick="editProfile()" class="w-full mt-6 bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition">
+                    <i class="fas fa-edit mr-2"></i> Edit Profile
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 mt-6">
+                <h3 class="font-bold text-lg mb-4">⚡ Quick Actions</h3>
+                <div class="space-y-3">
+                    <button onclick="location.href='planner.html'" class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-green-50 transition flex items-center">
+                        <i class="fas fa-plus-circle text-green-600 w-8"></i>
+                        <span>Create New Farm Plan</span>
+                    </button>
+                    <button onclick="location.href='market-prices.html'" class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-green-50 transition flex items-center">
+                        <i class="fas fa-chart-line text-green-600 w-8"></i>
+                        <span>Check Market Prices</span>
+                    </button>
+                    <button onclick="location.href='resources.html'" class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-green-50 transition flex items-center">
+                        <i class="fas fa-book text-green-600 w-8"></i>
+                        <span>Browse Resources</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Soil Health & Weather Summary -->
+        <div class="lg:col-span-2">
+            <!-- Soil Health Summary -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+                <h3 class="font-bold text-lg mb-4">🧪 Soil Health Parameters</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Nitrogen (N)</span>
+                                <span class="font-semibold" id="soilN">80 ppm</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Phosphorus (P)</span>
+                                <span class="font-semibold" id="soilP">40 ppm</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Potassium (K)</span>
+                                <span class="font-semibold" id="soilK">35 ppm</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>pH Level</span>
+                                <span class="font-semibold" id="soilPH">6.5</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soil Recommendations -->
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-2">🌱 Recommendations</h4>
+                        <ul class="text-sm text-green-700 space-y-2">
+                            <li><i class="fas fa-check-circle mr-2"></i>Add compost to boost nitrogen</li>
+                            <li><i class="fas fa-check-circle mr-2"></i>pH is optimal for most crops</li>
+                            <li><i class="fas fa-check-circle mr-2"></i>Consider cover crops for potassium</li>
+                        </ul>
+                        <button onclick="location.href='soil-guide.html'" class="mt-3 text-green-600 text-sm hover:underline">
+                            View detailed analysis →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Summary -->
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <h3 class="font-bold text-lg mb-4">☀️ 5-Day Weather Forecast</h3>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="text-center p-2 bg-gray-50 rounded-lg">
+                        <p class="text-xs text-gray-500">Today</p>
+                        <i class="fas fa-sun text-yellow-500 text-xl my-2"></i>
+                        <p class="font-bold text-sm">25°/18°</p>
+                    </div>
+                    <div class="text-center p-2 bg-gray-50 rounded-lg">
+                        <p class="text-xs text-gray-500">Tue</p>
+                        <i class="fas fa-cloud-sun text-gray-500 text-xl my-2"></i>
+                        <p class="font-bold text-sm">26°/19°</p>
+                    </div>
+                    <div class="text-center p-2 bg-gray-50 rounded-lg">
+                        <p class="text-xs text-gray-500">Wed</p>
+                        <i class="fas fa-cloud-rain text-blue-500 text-xl my-2"></i>
+                        <p class="font-bold text-sm">24°/17°</p>
+                    </div>
+                    <div class="text-center p-2 bg-gray-50 rounded-lg">
+                        <p class="text-xs text-gray-500">Thu</p>
+                        <i class="fas fa-cloud-rain text-blue-500 text-xl my-2"></i>
+                        <p class="font-bold text-sm">23°/16°</p>
+                    </div>
+                    <div class="text-center p-2 bg-gray-50 rounded-lg">
+                        <p class="text-xs text-gray-500">Fri</p>
+                        <i class="fas fa-sun text-yellow-500 text-xl my-2"></i>
+                        <p class="font-bold text-sm">25°/18°</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-4 text-center">
+                    <i class="fas fa-info-circle mr-1"></i>Rain expected: 15mm on Wednesday
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FARM PLANS SECTION -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">📋 Your Farm Plans</h2>
+            <div class="flex space-x-2">
+                <select class="border rounded-lg px-3 py-2 text-sm" id="planFilter">
+                    <option value="all">All Plans</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                    <option value="planned">Planned</option>
+                </select>
+                <button onclick="showNotification('Creating new farm plan...')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">
+                    <i class="fas fa-plus mr-1"></i> New Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- Plan Tabs -->
+        <div class="border-b mb-6">
+            <div class="flex space-x-8">
+                <button class="tab-btn active-tab pb-3 px-1 font-medium" onclick="switchTab('active')">Active Plans</button>
+                <button class="tab-btn pb-3 px-1 font-medium text-gray-500 hover:text-green-600" onclick="switchTab('upcoming')">Upcoming</button>
+                <button class="tab-btn pb-3 px-1 font-medium text-gray-500 hover:text-green-600" onclick="switchTab('completed')">Completed</button>
+                <button class="tab-btn pb-3 px-1 font-medium text-gray-500 hover:text-green-600" onclick="switchTab('drafts')">Drafts</button>
+            </div>
+        </div>
+
+        <!-- Plans Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="plansContainer">
+            <!-- Plan Card 1 - Active -->
+            <div class="plan-card bg-white border rounded-xl overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gradient-to-r from-green-600 to-green-500 h-2"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">Active</span>
+                            <h3 class="text-xl font-bold mt-2">Tomato Farm - North Field</h3>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">Plan #F001</p>
+                            <p class="text-xs text-gray-400">Created: Mar 15, 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-gray-500">Crop Type</p>
+                            <p class="font-semibold">Tomatoes (Roma)</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Area</p>
+                            <p class="font-semibold">5 acres</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Expected Harvest</p>
+                            <p class="font-semibold text-green-600">June 2024</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Budget</p>
+                            <p class="font-semibold">₹75,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>Growing Progress</span>
+                            <span class="font-semibold">65%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button onclick="viewPlan('F001')" class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700">
+                            <i class="fas fa-eye mr-1"></i> View
+                        </button>
+                        <button onclick="editPlan('F001')" class="flex-1 border border-green-600 text-green-600 py-2 rounded-lg text-sm hover:bg-green-50">
+                            <i class="fas fa-edit mr-1"></i> Edit
+                        </button>
+                        <button onclick="sharePlan('F001')" class="p-2 border rounded-lg hover:bg-gray-50">
+                            <i class="fas fa-share-alt text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Card 2 - Upcoming -->
+            <div class="plan-card bg-white border rounded-xl overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gradient-to-r from-yellow-600 to-yellow-500 h-2"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-full">Upcoming</span>
+                            <h3 class="text-xl font-bold mt-2">Pepper Plantation - South Field</h3>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">Plan #F002</p>
+                            <p class="text-xs text-gray-400">Created: Mar 10, 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-gray-500">Crop Type</p>
+                            <p class="font-semibold">Bell Peppers</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Area</p>
+                            <p class="font-semibold">3 acres</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Planting Date</p>
+                            <p class="font-semibold text-yellow-600">Apr 1, 2024</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Budget</p>
+                            <p class="font-semibold">₹45,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Preparation Tasks -->
+                    <div class="bg-gray-50 p-3 rounded-lg mb-4">
+                        <p class="text-xs font-semibold mb-2">Preparation Tasks:</p>
+                        <div class="flex items-center text-xs">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Soil testing (completed)</span>
+                        </div>
+                        <div class="flex items-center text-xs mt-1">
+                            <i class="fas fa-spinner text-yellow-500 mr-2"></i>
+                            <span>Order seeds (in progress)</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button onclick="viewPlan('F002')" class="flex-1 bg-yellow-600 text-white py-2 rounded-lg text-sm hover:bg-yellow-700">
+                            <i class="fas fa-eye mr-1"></i> View
+                        </button>
+                        <button onclick="editPlan('F002')" class="flex-1 border border-yellow-600 text-yellow-600 py-2 rounded-lg text-sm hover:bg-yellow-50">
+                            <i class="fas fa-edit mr-1"></i> Edit
+                        </button>
+                        <button onclick="sharePlan('F002')" class="p-2 border rounded-lg hover:bg-gray-50">
+                            <i class="fas fa-share-alt text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Card 3 - Planned -->
+            <div class="plan-card bg-white border rounded-xl overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-500 h-2"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">Planned</span>
+                            <h3 class="text-xl font-bold mt-2">Corn Field - East Field</h3>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">Plan #F003</p>
+                            <p class="text-xs text-gray-400">Created: Mar 5, 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-gray-500">Crop Type</p>
+                            <p class="font-semibold">Sweet Corn</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Area</p>
+                            <p class="font-semibold">8 acres</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Planting Window</p>
+                            <p class="font-semibold text-blue-600">Apr 15 - May 1</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Budget</p>
+                            <p class="font-semibold">₹1,20,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Resource Allocation -->
+                    <div class="bg-gray-50 p-3 rounded-lg mb-4">
+                        <p class="text-xs font-semibold mb-2">Resources Allocated:</p>
+                        <div class="flex justify-between text-xs">
+                            <span>Seeds: 40 kg</span>
+                            <span>Fertilizer: 200 kg</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button onclick="viewPlan('F003')" class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700">
+                            <i class="fas fa-eye mr-1"></i> View
+                        </button>
+                        <button onclick="editPlan('F003')" class="flex-1 border border-blue-600 text-blue-600 py-2 rounded-lg text-sm hover:bg-blue-50">
+                            <i class="fas fa-edit mr-1"></i> Edit
+                        </button>
+                        <button onclick="sharePlan('F003')" class="p-2 border rounded-lg hover:bg-gray-50">
+                            <i class="fas fa-share-alt text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Card 4 - Completed -->
+            <div class="plan-card bg-white border rounded-xl overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gradient-to-r from-gray-600 to-gray-500 h-2"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Completed</span>
+                            <h3 class="text-xl font-bold mt-2">Kale - Winter Harvest</h3>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">Plan #F004</p>
+                            <p class="text-xs text-gray-400">Created: Dec 1, 2023</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-gray-500">Crop Type</p>
+                            <p class="font-semibold">Kale</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Area</p>
+                            <p class="font-semibold">2 acres</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Harvested</p>
+                            <p class="font-semibold text-gray-600">Feb 2024</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Revenue</p>
+                            <p class="font-semibold text-green-600">₹85,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Harvest Summary -->
+                    <div class="bg-gray-50 p-3 rounded-lg mb-4">
+                        <p class="text-xs font-semibold mb-2">📊 Harvest Summary:</p>
+                        <div class="flex justify-between text-xs">
+                            <span>Yield: 2,500 kg</span>
+                            <span>Profit: ₹45,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button onclick="viewPlan('F004')" class="flex-1 bg-gray-600 text-white py-2 rounded-lg text-sm hover:bg-gray-700">
+                            <i class="fas fa-eye mr-1"></i> View Report
+                        </button>
+                        <button onclick="duplicatePlan('F004')" class="flex-1 border border-gray-600 text-gray-600 py-2 rounded-lg text-sm hover:bg-gray-50">
+                            <i class="fas fa-copy mr-1"></i> Duplicate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+            <button onclick="loadMorePlans()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition">
+                <i class="fas fa-spinner mr-2"></i> Load More Plans
+            </button>
+        </div>
+    </div>
+
+    <!-- Recent Activity Timeline -->
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+        <h2 class="text-2xl font-bold mb-6">📅 Recent Activity</h2>
+        <div class="space-y-4">
+            <div class="flex items-start">
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-seedling text-green-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Planted tomatoes in North Field</p>
+                    <p class="text-sm text-gray-500">2 hours ago</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-tint text-blue-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Irrigation system updated</p>
+                    <p class="text-sm text-gray-500">Yesterday</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-chart-line text-yellow-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Market prices updated for maize</p>
+                    <p class="text-sm text-gray-500">2 days ago</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-clipboard-check text-purple-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Soil test completed for South Field</p>
+                    <p class="text-sm text-gray-500">3 days ago</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+// Tab switching
+function switchTab(tab) {
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => {
+        t.classList.remove('active-tab', 'text-green-600');
+        t.classList.add('text-gray-500');
+    });
+    event.target.classList.add('active-tab', 'text-green-600');
+    event.target.classList.remove('text-gray-500');
+    
+    showNotification(`Switched to ${tab} plans`);
+}
+
+// View plan details
+function viewPlan(planId) {
+    showNotification(`Viewing plan ${planId}`);
+}
+
+// Edit plan
+function editPlan(planId) {
+    showNotification(`Editing plan ${planId}`);
+}
+
+// Share plan
+function sharePlan(planId) {
+    // Copy link to clipboard
+    const dummy = document.createElement('input');
+    document.body.appendChild(dummy);
+    dummy.value = `https://smartcrop.com/plan/${planId}`;
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+    showNotification('Plan link copied to clipboard!');
+}
+
+// Duplicate plan
+function duplicatePlan(planId) {
+    showNotification(`Plan ${planId} duplicated successfully!`);
+}
+
+// Load more plans
+function loadMorePlans() {
+    showNotification('Loading more plans...');
+}
+
+// Profile functions
+function editProfile() {
+    showNotification('Opening profile editor...');
+}
+
+function changePhoto() {
+    showNotification('Change profile photo');
+}
+
+function exportData() {
+    showNotification('Exporting your farm data...');
+}
+
+// Filter plans
+document.getElementById('planFilter').addEventListener('change', function(e) {
+    showNotification(`Filtering by: ${e.target.value} plans`);
+});
+
+// Show notification
+function showNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
+    notification.innerHTML = message;
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Ctrl+N for new plan
+    if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+        e.preventDefault();
+        showNotification('Creating new farm plan...');
+    }
+    // Ctrl+E for edit profile
+    if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+        e.preventDefault();
+        editProfile();
+    }
+});
+
+// Update stats periodically (simulated)
+setInterval(() => {
+    document.getElementById('growingDays').innerText = Math.floor(Math.random() * 200);
+}, 10000);
+
+// Welcome message on load
+window.onload = function() {
+    setTimeout(() => {
+        showNotification('Welcome back, John! 👋');
+    }, 500);
+};
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2024 SmartCrop - Smart Farming Solutions</p>
+        <p class="text-xs mt-2">
+            <i class="fas fa-keyboard mr-1"></i> Keyboard shortcuts: 
+            <kbd class="bg-gray-800 px-2 py-1 rounded mx-1">Ctrl+N</kbd> New Plan |
+            <kbd class="bg-gray-800 px-2 py-1 rounded mx-1">Ctrl+E</kbd> Edit Profile
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

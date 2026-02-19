@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomato Farming Guide - SmartCrop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .progress-bar { 
+            height: 4px; 
+            background: linear-gradient(90deg, #dc2626 var(--scroll), #e5e7eb 0);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+        .table-of-contents { position: sticky; top: 100px; }
+        .tip-box { background-color: #fef2f2; border-left: 4px solid #dc2626; }
+        .growth-stage { transition: all 0.3s ease; }
+        .growth-stage:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-600">Crop</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+                <a href="planner.html" class="text-gray-600 hover:text-green-600">Planner</a>
+                <a href="my-farm-plans.html" class="text-gray-600 hover:text-green-600">My Plans</a>
+                <a href="market-prices.html" class="text-gray-600 hover:text-green-600">Market</a>
+                <a href="resources.html" class="text-green-600 font-medium border-b-2 border-green-600">Resources</a>
+                <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-bar" style="--scroll: 0%"></div>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Back to Resources -->
+    <div class="mb-6">
+        <a href="resources.html" class="text-green-600 hover:text-green-700 flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Resources
+        </a>
+    </div>
+
+    <!-- Article Header -->
+    <div class="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl p-8 mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <span class="bg-red-700 text-white text-sm px-4 py-1 rounded-full">Crop Guide</span>
+            <div class="flex items-center space-x-4 text-sm">
+                <span><i class="far fa-clock mr-1"></i> 12 min read</span>
+                <span><i class="far fa-eye mr-1"></i> 3.5k reads</span>
+            </div>
+        </div>
+        <h1 class="text-4xl font-bold mb-2">Tomato Farming Guide</h1>
+        <p class="text-red-100 text-lg">Complete growing guide from planting to harvest</p>
+        
+        <!-- Author info -->
+        <div class="flex items-center mt-4">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-red-600"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-semibold">Dr. Sarah Johnson</p>
+                <p class="text-xs text-red-200">Vegetable Specialist • Updated March 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Table of Contents -->
+        <div class="lg:col-span-1">
+            <div class="table-of-contents bg-white p-6 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-list-ul text-red-600 mr-2"></i> In This Guide
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#varieties" class="text-gray-600 hover:text-red-600 flex items-center">• Tomato Varieties</a></li>
+                    <li><a href="#planting" class="text-gray-600 hover:text-red-600 flex items-center">• Planting Guide</a></li>
+                    <li><a href="#soil" class="text-gray-600 hover:text-red-600 flex items-center">• Soil Requirements</a></li>
+                    <li><a href="#watering" class="text-gray-600 hover:text-red-600 flex items-center">• Watering Schedule</a></li>
+                    <li><a href="#fertilizing" class="text-gray-600 hover:text-red-600 flex items-center">• Fertilizer Schedule</a></li>
+                    <li><a href="#pruning" class="text-gray-600 hover:text-red-600 flex items-center">• Pruning Tips</a></li>
+                    <li><a href="#disease" class="text-gray-600 hover:text-red-600 flex items-center">• Disease Control</a></li>
+                    <li><a href="#harvesting" class="text-gray-600 hover:text-red-600 flex items-center">• Harvesting</a></li>
+                </ul>
+                
+                <!-- Download PDF -->
+                <div class="mt-6 pt-4 border-t">
+                    <button class="w-full bg-gray-100 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-200">
+                        <i class="fas fa-download mr-2"></i> Download PDF Guide
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+            <div class="bg-white rounded-xl shadow-md p-8">
+                
+                <!-- Tomato Varieties -->
+                <section id="varieties" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🍅 Popular Tomato Varieties</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-circle text-red-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Roma</h3>
+                            <p class="text-xs text-gray-500">Determinate • 75 days</p>
+                            <p class="text-xs mt-1">Perfect for sauces</p>
+                        </div>
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-circle text-red-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Beefsteak</h3>
+                            <p class="text-xs text-gray-500">Indeterminate • 85 days</p>
+                            <p class="text-xs mt-1">Large slicing tomatoes</p>
+                        </div>
+                        <div class="border rounded-lg p-4 text-center hover:shadow-md">
+                            <i class="fas fa-circle text-red-500 text-xl mb-2"></i>
+                            <h3 class="font-semibold">Cherry</h3>
+                            <p class="text-xs text-gray-500">Indeterminate • 65 days</p>
+                            <p class="text-xs mt-1">Sweet, bite-sized</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Planting Guide -->
+                <section id="planting" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🌱 Planting Guide</h2>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg mb-4">
+                        <h3 class="font-semibold text-green-800 mb-2">📅 When to Plant:</h3>
+                        <ul class="list-disc list-inside text-sm text-green-700">
+                            <li>Start seeds indoors: 6-8 weeks before last frost</li>
+                            <li>Transplant outdoors: After last frost, soil temperature 60°F+</li>
+                            <li>Optimal planting time: March 15 - April 15 (Spring)</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="font-semibold mb-2">📏 Spacing:</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-600">
+                                <li>Between plants: 18-24 inches</li>
+                                <li>Between rows: 36-48 inches</li>
+                                <li>Plant depth: Up to first leaves</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">☀️ Sun Requirements:</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-600">
+                                <li>Full sun: 6-8 hours daily</li>
+                                <li>South-facing location ideal</li>
+                                <li>Protect from strong winds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Soil Requirements -->
+                <section id="soil" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🧪 Soil Requirements</h2>
+                    
+                    <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                        <h3 class="font-semibold text-yellow-800 mb-2">Perfect Soil Mix:</h3>
+                        <p class="text-sm">Well-draining loamy soil rich in organic matter</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border p-3 rounded">
+                            <span class="font-semibold">pH Level:</span>
+                            <span class="text-green-600 ml-2">6.0 - 6.8 (Optimal)</span>
+                        </div>
+                        <div class="border p-3 rounded">
+                            <span class="font-semibold">Organic Matter:</span>
+                            <span class="text-green-600 ml-2">3-5% compost</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Watering Schedule -->
+                <section id="watering" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">💧 Watering Schedule</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-tint text-blue-500 w-8"></i>
+                            <div>
+                                <span class="font-semibold">Weekly requirement:</span>
+                                <span class="ml-2">1-2 inches of water</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-clock text-blue-500 w-8"></i>
+                            <div>
+                                <span class="font-semibold">Frequency:</span>
+                                <span class="ml-2">Deep watering 2-3 times per week</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-blue-50 p-3 rounded">
+                            <i class="fas fa-ban text-blue-500 w-8"></i>
+                            <div>
+                                <span class="font-semibold">Avoid:</span>
+                                <span class="ml-2">Light daily watering, wet leaves</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fertilizer Schedule -->
+                <section id="fertilizing" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🌿 Fertilizer Schedule</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">1</span>
+                            <div>
+                                <h3 class="font-semibold">At Planting</h3>
+                                <p class="text-sm text-gray-600">Mix 2-3 inches of compost into soil. Add balanced fertilizer (10-10-10)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">2</span>
+                            <div>
+                                <h3 class="font-semibold">2 Weeks After Transplant</h3>
+                                <p class="text-sm text-gray-600">Apply balanced liquid fertilizer</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">3</span>
+                            <div>
+                                <h3 class="font-semibold">When Fruits Appear</h3>
+                                <p class="text-sm text-gray-600">Switch to low-nitrogen fertilizer (5-10-10)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-4 mt-1">4</span>
+                            <div>
+                                <h3 class="font-semibold">Every 3-4 Weeks</h3>
+                                <p class="text-sm text-gray-600">Side-dress with compost or balanced fertilizer</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pruning Tips -->
+                <section id="pruning" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">✂️ Pruning Tips</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <h3 class="font-semibold text-green-700 mb-2">Do:</h3>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Remove suckers when small</li>
+                                <li>Prune lower leaves</li>
+                                <li>Remove yellowing leaves</li>
+                                <li>Use clean, sharp tools</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <h3 class="font-semibold text-red-700 mb-2">Don't:</h3>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Prune in wet weather</li>
+                                <li>Remove too many leaves</li>
+                                <li>Prune determinate varieties heavily</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Disease Control -->
+                <section id="disease" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🛡️ Common Diseases & Control</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Disease</th>
+                                    <th class="px-4 py-2 text-left">Symptoms</th>
+                                    <th class="px-4 py-2 text-left">Control</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr><td class="px-4 py-2">Early Blight</td><td class="px-4 py-2">Dark spots on leaves</td><td class="px-4 py-2">Copper fungicide, mulch</td></tr>
+                                <tr><td class="px-4 py-2">Late Blight</td><td class="px-4 py-2">Dark, water-soaked spots</td><td class="px-4 py-2">Remove infected plants</td></tr>
+                                <tr><td class="px-4 py-2">Blossom End Rot</td><td class="px-4 py-2">Dark sunken spots on fruit</td><td class="px-4 py-2">Consistent watering, calcium</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Harvesting -->
+                <section id="harvesting" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🥫 Harvesting Guide</h2>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <ul class="space-y-2 text-sm">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Harvest when fully colored but still firm</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Pick regularly to encourage more production</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Store at room temperature, not refrigerator</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Expected harvest: June - July (60-85 days after planting)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Quick Tips Box -->
+                <div class="tip-box p-4 rounded-lg mt-6">
+                    <h3 class="font-bold text-red-800 mb-2 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        Pro Tips for Maximum Yield
+                    </h3>
+                    <ul class="list-disc list-inside text-sm text-red-700">
+                        <li>Plant marigolds nearby to repel pests</li>
+                        <li>Use mulch to retain moisture and prevent disease</li>
+                        <li>Provide support with cages or stakes</li>
+                        <li>Rotate crops yearly to prevent disease buildup</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📖 You Might Also Like</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-pepper-hot text-green-600 mb-2"></i>
+                <h3 class="font-semibold">Pepper Cultivation Guide</h3>
+                <p class="text-xs text-gray-500 mt-1">Maximize your pepper yield</p>
+                <a href="pepperguide.html" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-leaf text-green-600 mb-2"></i>
+                <h3 class="font-semibold">Soil Health Guide</h3>
+                <p class="text-xs text-gray-500 mt-1">Perfect soil for vegetables</p>
+                <a href="loamyguide.html" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                <i class="fas fa-bug text-green-600 mb-2"></i>
+                <h3 class="font-semibold">Pest Control</h3>
+                <p class="text-xs text-gray-500 mt-1">Natural pest management</p>
+                <a href="#" class="text-green-600 text-xs hover:underline block mt-2">Read More →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll Progress Script -->
+<script>
+window.onscroll = function() {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.querySelector('.progress-bar').style.setProperty('--scroll', scrolled + '%');
+}
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+        <p>© 2024 SmartCrop - Empowering Farmers with Knowledge</p>
+    </div>
+</footer>
+
+</body>
+</html>
