@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidhaiX - Your Personalized Recommendations</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #1a4d2e 0%, #2e7d5e 100%); }
+        .recommendation-card { transition: all 0.3s ease; }
+        .recommendation-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-700"></i>
+                <span class="text-2xl font-bold text-gray-800">Vidhai<span class="text-green-700">X</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="goBack()" class="px-6 py-2 bg-green-700 text-white font-medium rounded-lg hover:bg-green-800 transition shadow-lg flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="pt-32 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Your Personalized Crop Recommendations</h1>
+            <p class="text-xl text-gray-600">Based on your farm's unique conditions and current market data</p>
+        </div>
+
+        <!-- User Input Summary -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12" id="userInputSummary">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-check-circle text-green-700 mr-3"></i>
+                Your Farm Details
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-green-50 rounded-xl p-4">
+                    <span class="text-sm text-gray-600">Land Size</span>
+                    <p class="text-2xl font-bold text-green-800" id="displayLandSize">5 acres</p>
+                </div>
+                <div class="bg-green-50 rounded-xl p-4">
+                    <span class="text-sm text-gray-600">Soil Type</span>
+                    <p class="text-2xl font-bold text-green-800" id="displaySoilType">Loamy Soil</p>
+                </div>
+                <div class="bg-green-50 rounded-xl p-4">
+                    <span class="text-sm text-gray-600">Budget</span>
+                    <p class="text-2xl font-bold text-green-800" id="displayBudget">5,000</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" id="recommendationsContainer">
+            <!-- Recommendations will be dynamically inserted here -->
+        </div>
+
+        <!-- Soil Health Analysis -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-chart-line text-green-700 mr-3"></i>
+                Soil Health Analysis
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-semibold mb-4">Current Soil Conditions:</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Nitrogen Level</span>
+                                <span class="font-bold" id="nitrogenLevel">High</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 85%" id="nitrogenBar"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Phosphorus Level</span>
+                                <span class="font-bold" id="phosphorusLevel">Medium</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full">
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%" id="phosphorusBar"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Potassium Level</span>
+                                <span class="font-bold" id="potassiumLevel">High</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 90%" id="potassiumBar"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>pH Level</span>
+                                <span class="font-bold" id="phLevel">6.5 (Optimal)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 75%" id="phBar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Recommendations:</h3>
+                    <ul class="space-y-3" id="soilRecommendations">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span>Add organic compost to maintain nitrogen levels</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span>Consider crop rotation with legumes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span>pH level is optimal for most crops</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seasonal Calendar -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-calendar-alt text-green-700 mr-3"></i>
+                Seasonal Planting Calendar
+            </h2>
+            <div class="grid md:grid-cols-4 gap-4" id="seasonalCalendar">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Market Insights -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-chart-bar text-green-700 mr-3"></i>
+                Real-Time Market Insights
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6" id="marketInsights">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Action Buttons - Removed Edit Details button -->
+        <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="downloadRecommendations()" class="px-8 py-4 bg-green-700 text-white font-bold rounded-lg hover:bg-green-800 transition flex items-center">
+                <i class="fas fa-download mr-2"></i>
+                Download Recommendations
+            </button>
+            <button onclick="shareRecommendations()" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition flex items-center">
+                <i class="fas fa-share-alt mr-2"></i>
+                Share Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p>&copy; 2024 SmartCrop. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+// Get parameters from URL (if coming from form)
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        landSize: params.get('landSize') || '5',
+        soilType: params.get('soilType') || 'Loamy Soil',
+        budget: params.get('budget') || '5000'
+    };
+}
+
+// Go back to home page
+function goBack() {
+    window.location.href = 'homepage.html'; // Change this to your home page filename
+}
+
+// Share recommendations - Fully functional
+function shareRecommendations() {
+    const params = getUrlParams();
+    const shareTitle = 'My SmartCrop Farming Recommendations';
+    const shareText = `Check out my personalized crop recommendations from SmartCrop!\n\n` +
+                      `Farm Details:\n` +
+                      `• Land Size: ${params.landSize} acres\n` +
+                      `• Soil Type: ${params.soilType}\n` +
+                      `• Budget: $${params.budget}\n\n` +
+                      `Get personalized recommendations for your farm at SmartCrop!`;
+    
+    if (navigator.share) {
+        // Use Web Share API for mobile devices
+        navigator.share({
+            title: shareTitle,
+            text: shareText,
+            url: window.location.href
+        }).catch((error) => {
+            console.log('Share cancelled or failed:', error);
+            // Fallback to clipboard if share fails/cancelled
+            copyToClipboard(shareText + '\n\n' + window.location.href);
+        });
+    } else if (navigator.clipboard) {
+        // Fallback for desktop - copy to clipboard
+        copyToClipboard(shareText + '\n\n' + window.location.href);
+    } else {
+        // Last resort fallback
+        alert('Share this link: ' + window.location.href);
+    }
+}
+
+// Helper function to copy text to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification('Link copied to clipboard! You can now share it.');
+    }).catch(() => {
+        // Fallback prompt if clipboard fails
+        prompt('Copy this link to share:', window.location.href);
+    });
+}
+
+// Show notification toast
+function showNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Download recommendations as text file
+function downloadRecommendations() {
+    const params = getUrlParams();
+    const recommendations = generateRecommendations(params.landSize, params.soilType, params.budget);
+    
+    let content = 'SMARTCROP - PERSONALIZED FARMING RECOMMENDATIONS\n';
+    content += '==============================================\n\n';
+    content += `Date: ${new Date().toLocaleDateString()}\n\n`;
+    content += `YOUR FARM DETAILS:\n`;
+    content += `• Land Size: ${params.landSize} acres\n`;
+    content += `• Soil Type: ${params.soilType}\n`;
+    content += `• Budget: $${params.budget}\n\n`;
+    
+    content += `RECOMMENDED CROPS:\n`;
+    content += `-----------------\n\n`;
+    
+    recommendations.forEach((crop, index) => {
+        content += `${index + 1}. ${crop.name}\n`;
+        content += `   • Profit per acre: $${crop.profitPerAcre}\n`;
+        content += `   • Total profit: $${(crop.profitPerAcre * parseFloat(params.landSize)).toLocaleString()}\n`;
+        content += `   • Risk level: ${crop.risk}\n`;
+        content += `   • Demand: ${crop.demand}\n`;
+        content += `   • Water needs: ${crop.waterNeeds}\n`;
+        content += `   • Days to harvest: ${crop.daysToHarvest}\n\n`;
+    });
+    
+    content += `SOIL HEALTH SUMMARY:\n`;
+    content += `------------------\n`;
+    content += `• Nitrogen: ${document.getElementById('nitrogenLevel').textContent}\n`;
+    content += `• Phosphorus: ${document.getElementById('phosphorusLevel').textContent}\n`;
+    content += `• Potassium: ${document.getElementById('potassiumLevel').textContent}\n`;
+    content += `• pH Level: ${document.getElementById('phLevel').textContent}\n\n`;
+    
+    content += `Generated by SmartCrop - AI-Powered Farming Assistant\n`;
+    content += `Visit us at: ${window.location.origin}`;
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `SmartCrop-Recommendations-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showNotification('Recommendations downloaded successfully!');
+}
+
+// Generate recommendations based on user input
+function generateRecommendations(landSize, soilType, budget) {
+    const recommendations = [];
+    const landSizeNum = parseFloat(landSize);
+    const budgetNum = parseFloat(budget);
+    
+    // Crop database with conditions
+    const crops = [
+        { 
+            name: 'Tomatoes', 
+            icon: 'fa-apple-alt',
+            gradient: 'from-red-400 to-red-600',
+            profitPerAcre: 2500,
+            risk: 'Low',
+            demand: 'High ↑',
+            waterNeeds: 'Medium',
+            daysToHarvest: '75-85',
+            idealSoil: ['Loamy Soil', 'Sandy Soil'],
+            minBudget: 2000,
+            weather: 'Warm',
+            season: 'Spring/Summer'
+        },
+        { 
+            name: 'Peppers', 
+            icon: 'fa-pepper-hot',
+            gradient: 'from-green-400 to-green-600',
+            profitPerAcre: 3200,
+            risk: 'Medium',
+            demand: 'High ↑',
+            waterNeeds: 'Medium',
+            daysToHarvest: '70-85',
+            idealSoil: ['Loamy Soil', 'Sandy Soil'],
+            minBudget: 2500,
+            weather: 'Warm/Hot',
+            season: 'Spring/Summer'
+        },
+        { 
+            name: 'Soybeans', 
+            icon: 'fa-leaf',
+            gradient: 'from-green-800 to-green-600',
+            profitPerAcre: 2100,
+            risk: 'Low',
+            demand: 'Stable →',
+            waterNeeds: 'Medium',
+            daysToHarvest: '100-130',
+            idealSoil: ['Loamy Soil', 'Clay Soil'],
+            minBudget: 1800,
+            weather: 'Warm',
+            season: 'Summer'
+        }
+    ];
+    
+    // Filter crops based on soil type and budget
+    const suitableCrops = crops.filter(crop => 
+        crop.idealSoil.includes(soilType) && 
+        crop.minBudget <= (budgetNum / landSizeNum) * 1000
+    );
+    
+    // Sort by profit and take top 3-4
+    suitableCrops.sort((a, b) => b.profitPerAcre - a.profitPerAcre);
+    
+    return suitableCrops.slice(0, 4);
+}
+
+// Display recommendations
+function displayRecommendations() {
+    const params = getUrlParams();
+    const { landSize, soilType, budget } = params;
+    
+    // Display user inputs
+    document.getElementById('displayLandSize').textContent = `${landSize} acres`;
+    document.getElementById('displaySoilType').textContent = soilType;
+    document.getElementById('displayBudget').textContent = `$${parseFloat(budget).toLocaleString()}`;
+    
+    // Generate and display crop recommendations
+    const recommendations = generateRecommendations(landSize, soilType, budget);
+    const container = document.getElementById('recommendationsContainer');
+    container.innerHTML = ''; // Clear existing content
+    
+    recommendations.forEach(crop => {
+        const card = `
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg recommendation-card">
+                <div class="h-40 bg-gradient-to-r ${crop.gradient} flex items-center justify-center">
+                    <i class="fas ${crop.icon} text-white text-5xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">${crop.name}</h3>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profit/acre:</span>
+                            <span class="text-green-700 font-bold">$${crop.profitPerAcre.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risk:</span>
+                            <span class="${crop.risk === 'Low' ? 'text-green-600' : crop.risk === 'Medium' ? 'text-yellow-600' : 'text-red-600'}">${crop.risk}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Demand:</span>
+                            <span class="text-green-600">${crop.demand}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Water Needs:</span>
+                            <span>${crop.waterNeeds}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Harvest in:</span>
+                            <span>${crop.daysToHarvest} days</span>
+                        </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Total Profit (${landSize} acres):</span>
+                            <span class="text-green-700 font-bold">$${(crop.profitPerAcre * parseFloat(landSize)).toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+    
+    // Update soil health based on soil type
+    updateSoilHealth(soilType);
+    
+    // Update seasonal calendar
+    updateSeasonalCalendar();
+    
+    // Update market insights
+    updateMarketInsights();
+}
+
+// Update soil health indicators
+function updateSoilHealth(soilType) {
+    // Adjust soil parameters based on soil type
+    const soilHealth = {
+        'Loamy Soil': { nitrogen: 85, phosphorus: 65, potassium: 90, ph: 75, phValue: 6.5 },
+        'Clay Soil': { nitrogen: 70, phosphorus: 55, potassium: 75, ph: 60, phValue: 7.2 },
+        'Sandy Soil': { nitrogen: 50, phosphorus: 45, potassium: 60, ph: 70, phValue: 6.0 }
+    };
+    
+    const health = soilHealth[soilType] || soilHealth['Loamy Soil'];
+    
+    document.getElementById('nitrogenBar').style.width = health.nitrogen + '%';
+    document.getElementById('phosphorusBar').style.width = health.phosphorus + '%';
+    document.getElementById('potassiumBar').style.width = health.potassium + '%';
+    document.getElementById('phBar').style.width = health.ph + '%';
+    
+    document.getElementById('nitrogenLevel').textContent = health.nitrogen > 70 ? 'High' : health.nitrogen > 50 ? 'Medium' : 'Low';
+    document.getElementById('phosphorusLevel').textContent = health.phosphorus > 70 ? 'High' : health.phosphorus > 50 ? 'Medium' : 'Low';
+    document.getElementById('potassiumLevel').textContent = health.potassium > 70 ? 'High' : health.potassium > 50 ? 'Medium' : 'Low';
+    document.getElementById('phLevel').textContent = health.phValue + ' (Optimal)';
+}
+
+// Update seasonal calendar
+function updateSeasonalCalendar() {
+    const months = ['March', 'April', 'May', 'June'];
+    const calendar = document.getElementById('seasonalCalendar');
+    calendar.innerHTML = ''; // Clear existing content
+    
+    months.forEach(month => {
+        const monthCard = `
+            <div class="bg-green-50 rounded-lg p-4 text-center">
+                <h4 class="font-bold text-green-800 mb-2">${month}</h4>
+                <p class="text-sm text-gray-600">Tomatoes, Peppers</p>
+                <p class="text-xs text-gray-500 mt-1">Planting season</p>
+            </div>
+        `;
+        calendar.innerHTML += monthCard;
+    });
+}
+
+// Update market insights
+function updateMarketInsights() {
+    const insights = document.getElementById('marketInsights');
+    insights.innerHTML = ''; // Clear existing content
+    
+    const marketData = [
+        { crop: 'Tomatoes', price: '2.50/kg', trend: 'up', change: '+15%' },
+        { crop: 'Corn', price: '1.80/kg', trend: 'stable', change: '0%' },
+        { crop: 'Peppers', price: '3.20/kg', trend: 'up', change: '+22%' }
+    ];
+    
+    marketData.forEach(item => {
+        const insight = `
+            <div class="bg-gray-50 rounded-xl p-6">
+                <h4 class="font-bold text-lg mb-2">${item.crop}</h4>
+                <p class="text-2xl font-bold text-green-700 mb-2">${item.price}</p>
+                <div class="flex items-center ${item.trend === 'up' ? 'text-green-600' : 'text-gray-600'}">
+                    <i class="fas fa-arrow-${item.trend === 'up' ? 'up' : 'right'} mr-1"></i>
+                    <span>${item.change}</span>
+                </div>
+            </div>
+        `;
+        insights.innerHTML += insight;
+    });
+}
+
+// Initialize on page load
+window.onload = function() {
+    displayRecommendations();
+};
+</script>
+
+<!-- Additional CSS for brown color -->
+<style>
+.bg-brown-500 { background-color: #8B4513; }
+.from-brown-500 { --tw-gradient-from: #8B4513; }
+</style>
+
+</body>
+</html>
