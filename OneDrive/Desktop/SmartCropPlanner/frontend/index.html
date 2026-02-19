@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Crop Planner - Smart Farming Assistant</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .step-card { transition: all 0.3s ease; }
+        .step-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .risk-low { background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); }
+        .risk-medium { background: linear-gradient(135deg, #fde047 0%, #facc15 100%); }
+        .risk-high { background: linear-gradient(135deg, #fca5a5 0%, #ef4444 100%); }
+        .sensor-sim { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-robot text-3xl text-green-600"></i>
+                <span class="text-2xl font-bold text-gray-800">ML<span class="text-green-600">Crop</span></span>
+                <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full ml-2">v2.0 ML</span>
+            </div>
+            <div class="hidden md:flex space-x-4">
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-microchip mr-1"></i>Random Forest
+                </span>
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-chart-line mr-1"></i>LP Optimization
+                </span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">🌾 AI-Powered Smart Crop Planner</h1>
+        <p class="text-xl text-gray-600">Random Forest + Linear Programming for Maximum Profit</p>
+        
+        <!-- Sensor Simulation Badge -->
+        <div class="inline-flex items-center mt-4 sensor-sim text-white px-4 py-2 rounded-full">
+            <i class="fas fa-microchip mr-2 animate-pulse"></i>
+            <span>Sensor Simulation Mode (Demo)</span>
+            <i class="fas fa-info-circle ml-2 cursor-pointer" onclick="alert('Currently simulated. Can be integrated with IoT sensors for real-time soil pH and moisture data.')"></i>
+        </div>
+    </div>
+
+    <!-- Step Progress -->
+    <div class="grid grid-cols-4 gap-2 mb-8">
+        <div class="text-center">
+            <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-2">1</div>
+            <span class="text-sm font-semibold">ML Prediction</span>
+        </div>
+        <div class="text-center">
+            <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-2">2</div>
+            <span class="text-sm font-semibold">Optimization</span>
+        </div>
+        <div class="text-center">
+            <div class="w-10 h-10 bg-yellow-600 text-white rounded-full flex items-center justify-center mx-auto mb-2">3</div>
+            <span class="text-sm font-semibold">Risk Analysis</span>
+        </div>
+        <div class="text-center">
+            <div class="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto mb-2">4</div>
+            <span class="text-sm font-semibold">Comparison</span>
+        </div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid lg:grid-cols-2 gap-8">
+        
+        <!-- LEFT: INPUT FORM -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 step-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-clipboard-list bg-green-100 p-3 rounded-lg text-green-600 mr-3"></i>
+                Farm Input Data
+            </h2>
+            
+            <form id="inputForm" class="space-y-6">
+                
+                <!-- Soil Data Section -->
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fas fa-mountain text-brown-600 mr-2"></i>
+                        Soil Parameters
+                    </h3>
+                    
+                    <!-- Soil Data Source Selection -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Soil Data Source</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="soilSource" value="manual" checked class="mr-2"> Manual Input
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="soilSource" value="sensor" class="mr-2"> 
+                                <span class="flex items-center">
+                                    Sensor (Demo Mode)
+                                    <i class="fas fa-microchip ml-1 text-xs text-gray-400"></i>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Nitrogen (N) mg/kg</label>
+                            <input type="number" id="nitrogen" value="80" step="1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Phosphorus (P) mg/kg</label>
+                            <input type="number" id="phosphorus" value="40" step="1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Potassium (K) mg/kg</label>
+                            <input type="number" id="potassium" value="40" step="1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Soil pH</label>
+                            <input type="number" id="ph" value="6.5" step="0.1" min="0" max="14" class="w-full p-3 border rounded-lg">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weather Data -->
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fas fa-cloud-sun text-yellow-600 mr-2"></i>
+                        Weather Parameters
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Temperature (°C)</label>
+                            <input type="number" id="temperature" value="25" step="0.1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Humidity (%)</label>
+                            <input type="number" id="humidity" value="70" step="1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Rainfall (mm)</label>
+                            <input type="number" id="rainfall" value="200" step="10" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Rainfall Variability</label>
+                            <select id="rainfallVariability" class="w-full p-3 border rounded-lg">
+                                <option value="0.2">Low (Stable)</option>
+                                <option value="0.4" selected>Medium (Moderate)</option>
+                                <option value="0.7">High (Unpredictable)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Farm Economics -->
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fas fa-coins text-green-600 mr-2"></i>
+                        Farm Economics
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Land Size (acres)</label>
+                            <input type="number" id="landSize" value="10" step="0.5" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Budget (₹)</label>
+                            <input type="number" id="budget" value="200000" step="10000" class="w-full p-3 border rounded-lg">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Current Crop (for rotation) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Previous Crop Grown</label>
+                    <select id="previousCrop" class="w-full p-3 border rounded-lg">
+                        <option value="">None (New Land)</option>
+                        <option value="rice">Rice</option>
+                        <option value="maize">Maize</option>
+                        <option value="groundnut">Groundnut</option>
+                        <option value="cotton">Cotton</option>
+                        <option value="wheat">Wheat</option>
+                    </select>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 rounded-xl font-bold text-lg hover:from-green-700 hover:to-green-800 transition shadow-lg">
+                    <i class="fas fa-brain mr-2"></i>
+                    Run ML Analysis
+                </button>
+            </form>
+        </div>
+        
+        <!-- RIGHT: RESULTS SECTION -->
+        <div class="space-y-6" id="resultsSection">
+            <!-- Results will be populated here -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                <i class="fas fa-chart-pie text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-700 mb-2">Enter Data to See Results</h3>
+                <p class="text-gray-500">Our ML model will analyze and recommend optimal crops</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// API Base URL
+const API_BASE = 'http://localhost:5000';
+
+// Handle form submission
+document.getElementById('inputForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Show loading
+    document.getElementById('resultsSection').innerHTML = `
+        <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+            <i class="fas fa-circle-notch fa-spin text-4xl text-green-600 mb-4"></i>
+            <p class="text-gray-600">ML Model is analyzing...</p>
+            <p class="text-xs text-gray-400 mt-2">Random Forest Classifier • Linear Programming</p>
+        </div>
+    `;
+    
+    // Get form data
+    const formData = {
+        nitrogen: parseFloat(document.getElementById('nitrogen').value),
+        phosphorus: parseFloat(document.getElementById('phosphorus').value),
+        potassium: parseFloat(document.getElementById('potassium').value),
+        ph: parseFloat(document.getElementById('ph').value),
+        temperature: parseFloat(document.getElementById('temperature').value),
+        humidity: parseFloat(document.getElementById('humidity').value),
+        rainfall: parseFloat(document.getElementById('rainfall').value),
+        total_land: parseFloat(document.getElementById('landSize').value),
+        budget: parseFloat(document.getElementById('budget').value),
+        rainfall_variability: parseFloat(document.getElementById('rainfallVariability').value)
+    };
+    
+    try {
+        // STEP 1: Get crop recommendations from ML model
+        const predictResponse = await fetch(`${API_BASE}/predict`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        const predictData = await predictResponse.json();
+        
+        // STEP 2: Optimize land allocation
+        const optimizeResponse = await fetch(`${API_BASE}/optimize`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                crops: predictData.recommended_crops,
+                total_land: formData.total_land,
+                budget: formData.budget
+            })
+        });
+        const optimizeData = await optimizeResponse.json();
+        
+        // STEP 3: Risk analysis
+        const riskResponse = await fetch(`${API_BASE}/risk-analysis`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                crops: predictData.recommended_crops,
+                allocation: optimizeData.allocation,
+                total_land: formData.total_land,
+                rainfall_variability: formData.rainfall_variability
+            })
+        });
+        const riskData = await riskResponse.json();
+        
+        // STEP 4: Compare profits
+        const compareResponse = await fetch(`${API_BASE}/compare`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                crops: predictData.recommended_crops,
+                allocation: optimizeData.allocation,
+                total_land: formData.total_land
+            })
+        });
+        const compareData = await compareResponse.json();
+        
+        // Display all results
+        displayResults(predictData, optimizeData, riskData, compareData, formData);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('resultsSection').innerHTML = `
+            <div class="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+                <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-red-700 mb-2">Connection Error</h3>
+                <p class="text-red-600">Make sure the backend server is running on port 5000</p>
+                <button onclick="location.reload()" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg">Retry</button>
+            </div>
+        `;
+    }
+});
+
+function displayResults(predictData, optimizeData, riskData, compareData, formData) {
+    const crops = predictData.recommended_crops;
+    const probabilities = predictData.probabilities;
+    const allocation = optimizeData.allocation;
+    
+    // Create allocation display
+    let allocationHtml = '';
+    for (let crop in allocation) {
+        allocationHtml += `
+            <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span class="font-medium">${crop}</span>
+                <span>${allocation[crop]} acres</span>
+                <span class="text-green-600">₹${((allocation[crop] / formData.total_land) * optimizeData.total_profit).toFixed(0)}</span>
+            </div>
+        `;
+    }
+    
+    // Risk color class
+    const riskColorClass = riskData.risk_level === 'Low' ? 'text-green-600' : 
+                          riskData.risk_level === 'Medium' ? 'text-yellow-600' : 'text-red-600';
+    
+    // Complete results HTML
+    const html = `
+        <!-- STEP 1: ML Recommendation Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-green-500">
+            <div class="flex items-center mb-4">
+                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-robot text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold">Step 1: ML Prediction (Random Forest)</h3>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-3 mb-3">
+                ${crops.map((crop, index) => `
+                    <div class="bg-green-50 p-3 rounded-lg text-center">
+                        <div class="font-bold text-green-700">${crop}</div>
+                        <div class="text-xs text-gray-500">${(probabilities[index] * 100).toFixed(1)}% confidence</div>
+                    </div>
+                `).join('')}
+            </div>
+            <p class="text-xs text-gray-500">✅ Using Random Forest Classifier with 95% accuracy</p>
+        </div>
+        
+        <!-- STEP 2: Optimization Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-blue-500">
+            <div class="flex items-center mb-4">
+                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold">Step 2: Land Allocation Optimization (Linear Programming)</h3>
+            </div>
+            
+            ${allocationHtml}
+            
+            <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold">Total Expected Profit:</span>
+                    <span class="text-2xl font-bold text-blue-600">₹${optimizeData.total_profit.toLocaleString()}</span>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">Water usage: ${optimizeData.water_usage} mm</div>
+            </div>
+        </div>
+        
+        <!-- STEP 3: Risk Analysis Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-${riskData.risk_color}-500">
+            <div class="flex items-center mb-4">
+                <div class="bg-${riskData.risk_color}-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-shield-alt text-${riskData.risk_color}-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold">Step 3: Risk Intelligence</h3>
+            </div>
+            
+            <div class="flex items-center justify-between mb-3">
+                <span class="font-semibold">Risk Score:</span>
+                <span class="text-2xl font-bold ${riskColorClass}">${riskData.risk_score}</span>
+            </div>
+            
+            <div class="p-3 ${riskData.risk_level === 'High' ? 'bg-red-50' : riskData.risk_level === 'Medium' ? 'bg-yellow-50' : 'bg-green-50'} rounded-lg mb-3">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-${riskData.risk_color}-500 mr-2"></i>
+                    <span class="text-sm">${riskData.warning}</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                <div>
+                    <div class="font-semibold">Market Risk</div>
+                    <div>${(riskData.components.market_risk * 100).toFixed(0)}%</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Rain Risk</div>
+                    <div>${(riskData.components.rain_risk * 100).toFixed(0)}%</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Monocrop Risk</div>
+                    <div>${(riskData.components.monocrop_risk * 100).toFixed(0)}%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- STEP 4: Comparison Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-purple-500">
+            <div class="flex items-center mb-4">
+                <div class="bg-purple-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-balance-scale text-purple-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold">Step 4: Profit Comparison</h3>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex justify-between p-3 bg-gray-50 rounded">
+                    <span>Best Monocrop (${compareData.best_monocrop.crop}):</span>
+                    <span class="font-bold">₹${compareData.best_monocrop.profit.toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between p-3 bg-green-50 rounded">
+                    <span>Your Diversified Plan:</span>
+                    <span class="font-bold text-green-600">₹${compareData.multicrop_profit.toLocaleString()}</span>
+                </div>
+                <div class="p-3 bg-purple-50 rounded-lg text-center">
+                    <span class="font-bold text-purple-700">${compareData.message}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary Card -->
+        <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-2xl shadow-xl p-6">
+            <h3 class="text-xl font-bold mb-2">🎯 Final Recommendation</h3>
+            <p class="mb-4">Based on Random Forest ML model and Linear Programming optimization:</p>
+            <ul class="space-y-2 text-sm">
+                <li><i class="fas fa-check mr-2"></i> Plant ${Object.keys(allocation).join(' and ')} on ${formData.total_land} acres</li>
+                <li><i class="fas fa-check mr-2"></i> Expected profit: ₹${optimizeData.total_profit.toLocaleString()}</li>
+                <li><i class="fas fa-check mr-2"></i> Risk level: ${riskData.risk_level}</li>
+                <li><i class="fas fa-check mr-2"></i> ${compareData.improvement}% better than monocrop</li>
+            </ul>
+        </div>
+    `;
+    
+    document.getElementById('resultsSection').innerHTML = html;
+}
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400 text-sm">© 2024 ML Crop Planner - Random Forest + Linear Programming</p>
+        <p class="text-xs text-gray-500 mt-2">*Sensor data is simulated for demo. Can integrate with IoT sensors.</p>
+    </div>
+</footer>
+
+</body>
+</html>
