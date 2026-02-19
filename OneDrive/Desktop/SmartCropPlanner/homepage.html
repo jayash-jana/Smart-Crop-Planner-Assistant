@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCrop - AI-Powered Farming Assistant</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .hero-gradient { background: linear-gradient(135deg, #1a4d2e 0%, #2e7d5e 100%); }
+        .hover-scale { transition: transform 0.3s ease; }
+        .hover-scale:hover { transform: translateY(-5px); }
+        .weather-widget { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- ==================== NAVIGATION BAR ==================== -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-seedling text-3xl text-green-700"></i>
+                <span class="text-2xl font-bold text-gray-800">Smart<span class="text-green-700">Crop</span></span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-green-700 font-medium">Home</a>
+                <a href="#features" class="text-gray-700 hover:text-green-700 font-medium">Features</a>
+                <a href="#how-it-works" class="text-gray-700 hover:text-green-700 font-medium">How It Works</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-green-700 font-medium">Success Stories</a>
+                <a href="#pricing" class="text-gray-700 hover:text-green-700 font-medium">Pricing</a>
+            </div>
+            
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button class="px-6 py-2 text-green-700 font-medium hover:bg-green-50 rounded-lg transition">
+                    Log In
+                </button>
+                <button class="px-6 py-2 bg-green-700 text-white font-medium rounded-lg hover:bg-green-800 transition shadow-lg">
+                    Sign Up Free
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div class="px-4 py-3 space-y-3">
+            <a href="#home" class="block text-gray-700 hover:text-green-700">Home</a>
+            <a href="#features" class="block text-gray-700 hover:text-green-700">Features</a>
+            <a href="#how-it-works" class="block text-gray-700 hover:text-green-700">How It Works</a>
+            <a href="#testimonials" class="block text-gray-700 hover:text-green-700">Success Stories</a>
+            <a href="#pricing" class="block text-gray-700 hover:text-green-700">Pricing</a>
+            <hr>
+            <button class="w-full text-left text-green-700 font-medium">Log In</button>
+            <button class="w-full bg-green-700 text-white px-4 py-2 rounded-lg">Sign Up Free</button>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section id="home" class="hero-gradient text-white pt-32 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Column - Main Content -->
+            <div>
+                <!-- Live Weather Widget -->
+                <div class="weather-widget inline-flex items-center space-x-4 px-6 py-3 rounded-full mb-8">
+                    <i class="fas fa-cloud-sun text-2xl"></i>
+                    <div id="weather-display">
+                        <span class="text-sm opacity-90">Loading weather...</span>
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                    Grow Smarter,<br>
+                    <span class="text-yellow-300">Harvest More</span>
+                </h1>
+                
+                <p class="text-xl opacity-90 mb-8">
+                    Data-driven crop planning for small and medium farmers. 
+                    Maximize profits, minimize risks with real-time insights.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <button onclick="location.href='planner.html'" class="px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg hover:bg-yellow-300 transition transform hover:scale-105 shadow-xl flex items-center">
+                        <i class="fas fa-robot mr-2"></i>
+                        Start Planning Now
+                    </button>
+                    <button class="px-8 py-4 bg-white text-green-700 font-bold rounded-lg hover:bg-gray-100 transition flex items-center">
+                        <i class="fas fa-play-circle mr-2"></i>
+                        Watch Demo
+                    </button>
+                </div>
+                
+                <!-- Stats Counter -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="text-3xl font-bold" id="farmer-count">5,200+</div>
+                        <div class="text-sm opacity-80">Happy Farmers</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">40%</div>
+                        <div class="text-sm opacity-80">Avg. Profit Increase</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">50K+</div>
+                        <div class="text-sm opacity-80">Acres Managed</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Hero Image/Interactive Demo -->
+            <div class="relative">
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/20">
+                    <div class="bg-white rounded-xl p-6 text-gray-800">
+                        <h3 class="font-bold text-lg mb-4">🌱 Quick Crop Planner</h3>
+                        
+                        <!-- Mini Form Preview -->
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-gray-600">Land Size</label>
+                                <div class="flex items-center border rounded-lg p-2">
+                                    <input type="number" placeholder="5" class="w-full outline-none" value="5">
+                                    <span class="text-gray-500">acres</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm text-gray-600">Soil Type</label>
+                                <select class="w-full border rounded-lg p-2">
+                                    <option>Loamy Soil (Detected ✓)</option>
+                                    <option>Clay Soil</option>
+                                    <option>Sandy Soil</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Live Price Ticker -->
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">Today's Top Prices:</span>
+                                    <span id="price-ticker" class="text-sm font-bold">Loading...</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-green-700 text-white py-3 rounded-lg font-bold hover:bg-green-800">
+                                See My Recommendation
+                            </button>
+                        </div>
+                        
+                        <!-- Soil Health Indicator -->
+                        <div class="mt-4 pt-4 border-t">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Your Soil Health:</span>
+                                <span class="text-green-600 font-bold">Excellent</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full mt-1">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Floating Elements -->
+                <div class="absolute -top-4 -right-4 bg-yellow-400 text-gray-900 p-3 rounded-full animate-bounce">
+                    <i class="fas fa-chart-line text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURES SECTION ==================== -->
+<section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <span class="text-green-700 font-semibold">WHY CHOOSE US</span>
+            <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-4">Smart Features for Smart Farmers</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Everything you need to make profitable farming decisions
+            </p>
+        </div>
+        
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <!-- Feature 1 -->
+            <div class="bg-gray-50 rounded-2xl p-8 hover-scale">
+                <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                    <i class="fas fa-robot text-3xl text-green-700"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">AI Crop Recommendations</h3>
+                <p class="text-gray-600 mb-4">
+                    Get personalized crop combinations based on your land, soil, and budget
+                </p>
+                <div class="flex items-center text-green-700">
+                    <span class="text-sm font-semibold">Soil-based matching</span>
+                    <i class="fas fa-check-circle ml-2 text-green-500"></i>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="bg-gray-50 rounded-2xl p-8 hover-scale">
+                <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                    <i class="fas fa-chart-line text-3xl text-blue-700"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Real-Time Market Prices</h3>
+                <p class="text-gray-600 mb-4">
+                    Live pricing data from local markets to maximize your profits
+                </p>
+                <div class="flex items-center text-blue-700">
+                    <span class="text-sm font-semibold">Updated every hour</span>
+                    <i class="fas fa-sync-alt ml-2"></i>
+                </div>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="bg-gray-50 rounded-2xl p-8 hover-scale">
+                <div class="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center mb-6">
+                    <i class="fas fa-cloud-sun-rain text-3xl text-yellow-700"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Weather Intelligence</h3>
+                <p class="text-gray-600 mb-4">
+                    7-day forecasts and alerts to protect your crops
+                </p>
+                <div class="flex items-center text-yellow-700">
+                    <span class="text-sm font-semibold">Hyper-local data</span>
+                    <i class="fas fa-map-marker-alt ml-2"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Features Row -->
+        <div class="grid md:grid-cols-4 gap-6 mt-8">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-shield-alt text-green-700 text-xl"></i>
+                <span>Risk Analysis</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-calendar-alt text-green-700 text-xl"></i>
+                <span>Seasonal Planning</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-tint text-green-700 text-xl"></i>
+                <span>Water Management</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-leaf text-green-700 text-xl"></i>
+                <span>Soil Health</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section id="how-it-works" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-green-700 font-semibold">SIMPLE PROCESS</span>
+            <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-4">Three Steps to Better Farming</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8 relative">
+            
+            <!-- Step 1 -->
+            <div class="text-center relative">
+                <div class="w-24 h-24 bg-green-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 relative z-10">
+                    1
+                </div>
+                <h3 class="text-xl font-bold mb-3">Enter Your Details</h3>
+                <p class="text-gray-600">
+                    Tell us your land size, soil type, and budget. We'll handle the rest.
+                </p>
+                <!-- Live Data Demo -->
+                <div class="mt-4 bg-white p-3 rounded-lg text-sm">
+                    <span class="text-green-600">✓ Auto-detected: Loamy soil</span>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="text-center relative">
+                <div class="w-24 h-24 bg-green-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6">
+                    2
+                </div>
+                <h3 class="text-xl font-bold mb-3">AI Analysis</h3>
+                <p class="text-gray-600">
+                    Our system analyzes weather, soil, and market data in real-time.
+                </p>
+                <!-- Data Sources Animation -->
+                <div class="mt-4 flex justify-center space-x-2">
+                    <span class="bg-blue-100 p-2 rounded"><i class="fas fa-cloud-sun text-blue-600"></i></span>
+                    <span class="bg-brown-100 p-2 rounded"><i class="fas fa-mountain text-yellow-600"></i></span>
+                    <span class="bg-green-100 p-2 rounded"><i class="fas fa-chart-bar text-green-600"></i></span>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="text-center relative">
+                <div class="w-24 h-24 bg-green-500 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6">
+                    3
+                </div>
+                <h3 class="text-xl font-bold mb-3">Get Your Plan</h3>
+                <p class="text-gray-600">
+                    Receive personalized crop combinations with profit estimates.
+                </p>
+                <!-- Sample Output -->
+                <div class="mt-4 bg-green-100 p-3 rounded-lg">
+                    <span class="text-green-800">💰 Profit: $12,500 estimated</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section id="testimonials" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-green-700 font-semibold">SUCCESS STORIES</span>
+            <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-4">Farmers Love SmartCrop</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 p-8 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        RJ
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Rajesh Kumar</h4>
+                        <p class="text-sm text-gray-600">Small Farmer, Punjab</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    "I used to grow only wheat. SmartCrop suggested mixing tomatoes and peppers. My profit increased by 60%!"
+                </p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 p-8 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        SP
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Sunita Patel</h4>
+                        <p class="text-sm text-gray-600">Medium Farmer, Gujarat</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    "The weather alerts saved my crops from unexpected rain. Now I always plan with SmartCrop."
+                </p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-gray-50 p-8 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        MS
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Mohammed Salim</h4>
+                        <p class="text-sm text-gray-600">Organic Farmer, Kerala</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    "The soil analysis helped me understand my farm better. Perfect crop combinations every season."
+                </p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED CROPS ==================== -->
+<section class="py-20 bg-green-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-green-700 font-semibold">THIS SEASON</span>
+            <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-4">Best Crops to Plant Now</h2>
+            <p class="text-xl text-gray-600">Based on current weather and market data</p>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+            
+            <!-- Crop Card 1 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-scale">
+                <div class="h-40 bg-gradient-to-r from-red-400 to-red-600 flex items-center justify-center">
+                    <i class="fas fa-apple-alt text-white text-5xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Tomatoes</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profit/acre:</span>
+                            <span class="text-green-700 font-bold">$2,500</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risk:</span>
+                            <span class="text-yellow-600">Low</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Demand:</span>
+                            <span class="text-green-600">High ↑</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crop Card 2 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-scale">
+                <div class="h-40 bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center">
+                    <i class="fas fa-corn text-white text-5xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Corn</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profit/acre:</span>
+                            <span class="text-green-700 font-bold">$1,800</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risk:</span>
+                            <span class="text-green-600">Very Low</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Demand:</span>
+                            <span class="text-yellow-600">Medium →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crop Card 3 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-scale">
+                <div class="h-40 bg-gradient-to-r from-green-400 to-green-600 flex items-center justify-center">
+                    <i class="fas fa-pepper-hot text-white text-5xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Peppers</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profit/acre:</span>
+                            <span class="text-green-700 font-bold">$3,200</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risk:</span>
+                            <span class="text-red-600">Medium</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Demand:</span>
+                            <span class="text-green-600">High ↑</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crop Card 4 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-scale">
+                <div class="h-40 bg-gradient-to-r from-green-800 to-green-600 flex items-center justify-center">
+                    <i class="fas fa-leaf text-white text-5xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Soybeans</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profit/acre:</span>
+                            <span class="text-green-700 font-bold">$2,100</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risk:</span>
+                            <span class="text-green-600">Low</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Demand:</span>
+                            <span class="text-yellow-600">Stable →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA SECTION ==================== -->
+<section class="py-20 hero-gradient">
+    <div class="max-w-4xl mx-auto text-center px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Maximize Your Farm's Potential?
+        </h2>
+        <p class="text-xl text-white/90 mb-10">
+            Join 5,000+ farmers who are growing smarter with SmartCrop
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <button class="px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg hover:bg-yellow-300 text-lg">
+                <i class="fas fa-rocket mr-2"></i>
+                Start Free Trial
+            </button>
+            <button class="px-8 py-4 bg-white text-green-700 font-bold rounded-lg hover:bg-gray-100 text-lg">
+                <i class="fas fa-phone-alt mr-2"></i>
+                Schedule Demo
+            </button>
+        </div>
+        <p class="text-white/80 mt-6">No credit card required • 14-day free trial</p>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-5 gap-8">
+            
+            <!-- Company Info -->
+            <div class="col-span-2">
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fas fa-seedling text-3xl text-green-400"></i>
+                    <span class="text-2xl font-bold">SmartCrop</span>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Empowering farmers with data-driven insights for profitable and sustainable farming.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-green-400"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h4 class="font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-green-400">About Us</a></li>
+                    <li><a href="#" class="hover:text-green-400">Features</a></li>
+                    <li><a href="#" class="hover:text-green-400">Pricing</a></li>
+                    <li><a href="#" class="hover:text-green-400">Blog</a></li>
+                </ul>
+            </div>
+            
+            <!-- Support -->
+            <div>
+                <h4 class="font-bold mb-4">Support</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-green-400">Help Center</a></li>
+                    <li><a href="#" class="hover:text-green-400">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-green-400">FAQ</a></li>
+                    <li><a href="#" class="hover:text-green-400">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <!-- Download App -->
+            <div>
+                <h4 class="font-bold mb-4">Get the App</h4>
+                <div class="space-y-2">
+                    <button class="bg-gray-800 px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-gray-700">
+                        <i class="fab fa-google-play text-xl"></i>
+                        <span>Google Play</span>
+                    </button>
+                    <button class="bg-gray-800 px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-gray-700">
+                        <i class="fab fa-apple text-xl"></i>
+                        <span>App Store</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="border-gray-800 my-8">
+        
+        <div class="text-center text-gray-400">
+            <p>&copy; 2024 SmartCrop. All rights reserved. Made with ❤️ for farmers</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ==================== SCRIPT.JS ==================== -->
+<script>
+// Mobile Menu Toggle
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+});
+
+// Real-Time Weather Data Simulation (Open-Meteo API)
+async function fetchWeatherData() {
+    try {
+        // Using free Open-Meteo API (no API key required)
+        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true');
+        const data = await response.json();
+        
+        const weatherDisplay = document.getElementById('weather-display');
+        const temp = data.current_weather.temperature;
+        const weatherCode = data.current_weather.weathercode;
+        
+        // Determine weather condition based on code
+        let condition = 'Sunny';
+        if (weatherCode > 50) condition = 'Cloudy';
+        if (weatherCode > 60) condition = 'Rainy';
+        
+        weatherDisplay.innerHTML = `
+            <span class="font-bold">${temp}°C</span>
+            <span class="mx-2">|</span>
+            <span>${condition}</span>
+            <span class="mx-2">|</span>
+            <span>Springfield, IL</span>
+        `;
+    } catch (error) {
+        document.getElementById('weather-display').innerHTML = '🌤️ 24°C | Sunny | Springfield, IL';
+    }
+}
+
+// Simulate Market Price Ticker
+function updatePriceTicker() {
+    const crops = [
+        { name: 'Tomatoes', price: 2.5 },
+        { name: 'Corn', price: 1.8 },
+        { name: 'Peppers', price: 3.0 }
+    ];
+    
+    const randomCrop = crops[Math.floor(Math.random() * crops.length)];
+    document.getElementById('price-ticker').innerHTML = 
+        `${randomCrop.name}: $${randomCrop.price}/kg`;
+}
+
+// Animate Counter Numbers
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target.toLocaleString() + '+';
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current).toLocaleString() + '+';
+        }
+    }, 30);
+}
+
+// Initialize everything when page loads
+window.onload = function() {
+    fetchWeatherData();
+    updatePriceTicker();
+    
+    // Refresh price ticker every 30 seconds
+    setInterval(updatePriceTicker, 30000);
+    
+    // Refresh weather every 5 minutes
+    setInterval(fetchWeatherData, 300000);
+    
+    // Animate farmer counter
+    const farmerCount = document.getElementById('farmer-count');
+    animateCounter(farmerCount, 5200);
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+};
+
+// Parallax effect on scroll
+window.addEventListener('scroll', function() {
+    const hero = document.querySelector('.hero-gradient');
+    const scrolled = window.pageYOffset;
+    hero.style.backgroundPositionY = -(scrolled * 0.3) + 'px';
+});
+</script>
+
+<!-- Additional CSS for brown color (Tailwind doesn't have brown) -->
+<style>
+.bg-brown-100 { background-color: #f5f0e6; }
+.text-brown-600 { color: #8b5a2b; }
+</style>
+
+</body>
+</html>
