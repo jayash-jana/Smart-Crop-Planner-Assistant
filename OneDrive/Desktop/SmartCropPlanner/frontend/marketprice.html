@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer's Market Price Monitor - Frontend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header-content p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .last-updated {
+            text-align: right;
+            color: #666;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .btn-refresh:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .commodity-selector,
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .commodity-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .commodity-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #market-search {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        #market-search:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Price Summary */
+        .price-summary {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .summary-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .trend-indicator.up {
+            color: #2ecc71;
+        }
+
+        .trend-indicator.down {
+            color: #e74c3c;
+        }
+
+        .trend-indicator.stable {
+            color: #f39c12;
+        }
+
+        /* Main Panel Styles */
+        .main-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-header h2 {
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Prices Grid */
+        .prices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .prices-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+
+        .price-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .price-card .price-value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .price-card .price-trend {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.2);
+            font-size: 0.9em;
+        }
+
+        .price-card .market-name {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* List View */
+        .list-view .price-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+        }
+
+        .list-view .price-card h3 {
+            margin-bottom: 0;
+            flex: 2;
+        }
+
+        .list-view .price-card .price-value {
+            margin-bottom: 0;
+            flex: 1;
+            text-align: center;
+        }
+
+        .list-view .price-card .price-trend {
+            flex: 1;
+            text-align: center;
+        }
+
+        .list-view .price-card .market-name {
+            margin-top: 0;
+            flex: 2;
+            text-align: right;
+        }
+
+        /* Trend Chart */
+        .trend-chart {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+
+        /* Best Markets List */
+        .best-markets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .best-market-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .best-market-card:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .best-market-card .market-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .best-market-card .market-price {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        .best-market-card .trend-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            background: white;
+        }
+
+        .trend-badge.up {
+            color: #2ecc71;
+        }
+
+        .trend-badge.down {
+            color: #e74c3c;
+        }
+
+        .trend-badge.stable {
+            color: #f39c12;
+        }
+
+        .recommendation-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Loading and Error States */
+        .loading, .error, .no-data {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.2em;
+            grid-column: 1 / -1;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .no-data {
+            color: #f39c12;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        .toast.success {
+            border-left: 4px solid #2ecc71;
+        }
+
+        .toast.error {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .toast.info {
+            border-left: 4px solid #3498db;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .last-updated {
+                margin-top: 20px;
+                text-align: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+            }
+            
+            .prices-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🌾 Farmer's Market Price Monitor</h1>
+                <p>Real-time market prices and trends for better selling decisions</p>
+            </div>
+            <div class="last-updated">
+                Last Updated: <span id="last-updated">Not updated yet</span>
+                <button id="refresh-btn" class="btn-refresh">↻ Refresh Data</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="commodity-selector">
+                    <h3>Select Commodity</h3>
+                    <select id="commodity-select" class="commodity-select">
+                        <option value="">Choose a commodity...</option>
+                    </select>
+                </div>
+                
+                <div class="search-box">
+                    <h3>Search Markets</h3>
+                    <input type="text" id="market-search" placeholder="Search by market name or commodity...">
+                </div>
+                
+                <div class="price-summary" id="price-summary">
+                    <h3>Price Summary</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Average Price:</span>
+                            <span class="stat-value" id="avg-price">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Highest Price:</span>
+                            <span class="stat-value" id="max-price">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Lowest Price:</span>
+                            <span class="stat-value" id="min-price">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Trend:</span>
+                            <span class="stat-value" id="current-trend">
+                                <span class="trend-indicator"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #e8f4fd; border-radius: 10px;">
+                    <p style="color: #2980b9; font-size: 0.9em;">
+                        <strong>📌 Note:</strong> This is a frontend demo. Connect to your backend API endpoints:
+                        <br><br>
+                        • GET /api/commodities<br>
+                        • GET /api/current-prices<br>
+                        • GET /api/price-trend/{commodity}<br>
+                        • GET /api/best-markets/{commodity}
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Main Panel -->
+            <main class="main-panel">
+                <!-- Current Prices Section -->
+                <section class="prices-section">
+                    <div class="section-header">
+                        <h2>Current Market Prices</h2>
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid">Grid View</button>
+                            <button class="view-btn" data-view="list">List View</button>
+                        </div>
+                    </div>
+                    
+                    <div id="prices-container" class="prices-grid">
+                        <div class="loading">Loading prices... (Connect to backend)</div>
+                    </div>
+                </section>
+
+                <!-- Price Trend Section -->
+                <section class="trend-section" id="trend-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Price Trend Analysis</h2>
+                    </div>
+                    <div id="trend-chart" class="trend-chart">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </section>
+
+                <!-- Best Markets Section -->
+                <section class="best-markets-section" id="best-markets-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Best Markets to Sell</h2>
+                        <div class="recommendation-badge" id="recommendation-badge"></div>
+                    </div>
+                    <div id="best-markets-container" class="best-markets-list">
+                        <!-- Best markets will be loaded here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Configuration - Update these with your backend endpoints
+        const CONFIG = {
+            API_BASE_URL: 'http://localhost:5000', // Change to your backend URL
+            endpoints: {
+                commodities: '/api/commodities',
+                currentPrices: '/api/current-prices',
+                priceTrend: '/api/price-trend',
+                bestMarkets: '/api/best-markets'
+            }
+        };
+
+        // Mock data for demonstration (remove when connecting to real backend)
+        const MOCK_DATA = {
+            commodities: ["Wheat", "Rice", "Corn", "Potatoes", "Tomatoes", "Onions", "Apples", "Milk", "Eggs", "Chicken"],
+            prices: [
+                { commodity: "Wheat", market: "Local Market", price: 45.50, trend: "up", unit: "kg" },
+                { commodity: "Rice", market: "City Wholesale", price: 52.75, trend: "stable", unit: "kg" },
+                { commodity: "Corn", market: "Farmers Cooperative", price: 38.25, trend: "down", unit: "kg" },
+                { commodity: "Potatoes", market: "Regional Market", price: 28.90, trend: "up", unit: "kg" },
+                { commodity: "Tomatoes", market: "Online Exchange", price: 65.30, trend: "up", unit: "kg" },
+                { commodity: "Onions", market: "Export Hub", price: 42.15, trend: "stable", unit: "kg" },
+                { commodity: "Apples", market: "Downtown Market", price: 88.50, trend: "down", unit: "kg" },
+                { commodity: "Milk", market: "Rural Collection", price: 32.40, trend: "up", unit: "liter" },
+                { commodity: "Eggs", market: "Farmers Plaza", price: 15.25, trend: "stable", unit: "dozen" },
+                { commodity: "Chicken", market: "City Market", price: 95.00, trend: "up", unit: "kg" }
+            ]
+        };
+
+        // State management
+        let state = {
+            currentCommodity: '',
+            currentView: 'grid',
+            priceData: [],
+            commodities: [],
+            useMockData: true // Set to false when connecting to real backend
+        };
+
+        // DOM Elements
+        const elements = {
+            commoditySelect: document.getElementById('commodity-select'),
+            marketSearch: document.getElementById('market-search'),
+            pricesContainer: document.getElementById('prices-container'),
+            trendSection: document.getElementById('trend-section'),
+            bestMarketsSection: document.getElementById('best-markets-section'),
+            lastUpdated: document.getElementById('last-updated'),
+            avgPrice: document.getElementById('avg-price'),
+            maxPrice: document.getElementById('max-price'),
+            minPrice: document.getElementById('min-price'),
+            currentTrend: document.getElementById('current-trend'),
+            recommendationBadge: document.getElementById('recommendation-badge'),
+            bestMarketsContainer: document.getElementById('best-markets-container'),
+            trendChart: document.getElementById('trend-chart'),
+            refreshBtn: document.getElementById('refresh-btn'),
+            viewBtns: document.querySelectorAll('.view-btn')
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            loadCommodities();
+            loadCurrentPrices();
+        });
+
+        function initializeEventListeners() {
+            // Refresh button
+            elements.refreshBtn.addEventListener('click', refreshData);
+
+            // Commodity selection
+            elements.commoditySelect.addEventListener('change', handleCommodityChange);
+
+            // Market search
+            elements.marketSearch.addEventListener('input', filterMarkets);
+
+            // View toggle buttons
+            elements.viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    elements.viewBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    state.currentView = this.dataset.view;
+                    renderPrices();
+                });
+            });
+        }
+
+        // API Calls (with mock fallback)
+        async function fetchFromAPI(endpoint, params = {}) {
+            if (state.useMockData) {
+                // Return mock data based on endpoint
+                return getMockData(endpoint, params);
+            }
+
+            try {
+                const url = new URL(CONFIG.API_BASE_URL + endpoint);
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+                
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                showToast('Backend connection failed. Using mock data.', 'error');
+                state.useMockData = true;
+                return getMockData(endpoint, params);
+            }
+        }
+
+        function getMockData(endpoint, params) {
+            switch(endpoint) {
+                case '/api/commodities':
+                    return { success: true, commodities: MOCK_DATA.commodities };
+                
+                case '/api/current-prices':
+                    return {
+                        success: true,
+                        data: params.commodity 
+                            ? MOCK_DATA.prices.filter(p => p.commodity === params.commodity)
+                            : MOCK_DATA.prices,
+                        timestamp: new Date().toISOString()
+                    };
+                
+                case '/api/price-trend':
+                    return generateMockTrend(params.commodity || 'Wheat');
+                
+                case '/api/best-markets':
+                    return generateMockBestMarkets(params.commodity || 'Wheat');
+                
+                default:
+                    return { success: false, message: 'Unknown endpoint' };
+            }
+        }
+
+        function generateMockTrend(commodity) {
+            const days = 30;
+            const dates = [];
+            const prices = [];
+            let basePrice = MOCK_DATA.prices.find(p => p.commodity === commodity)?.price || 50;
+            
+            for (let i = 0; i < days; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - (days - 1 - i));
+                dates.push(date.toISOString().split('T')[0]);
+                
+                // Generate realistic price variation
+                const variation = Math.sin(i / 5) * 5 + (Math.random() * 2 - 1);
+                prices.push(Number((basePrice + variation).toFixed(2)));
+            }
+
+            // Create Plotly chart
+            const chartData = [{
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: commodity,
+                line: { color: '#2ecc71', width: 2 },
+                marker: { size: 6 }
+            }];
+
+            const layout = {
+                title: `${commodity} Price Trend - Last 30 Days`,
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'Price (per kg)' },
+                template: 'plotly_white'
+            };
+
+            return {
+                success: true,
+                commodity: commodity,
+                avg_price: Number((prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2)),
+                max_price: Math.max(...prices),
+                min_price: Math.min(...prices),
+                current_price: prices[prices.length - 1],
+                trend: prices[prices.length - 1] > prices[0] ? 'up' : prices[prices.length - 1] < prices[0] ? 'down' : 'stable',
+                chart: JSON.stringify({ data: chartData, layout: layout }),
+                data: dates.map((date, i) => ({ date, price: prices[i] }))
+            };
+        }
+
+        function generateMockBestMarkets(commodity) {
+            const markets = [
+                "Local Market", "City Wholesale", "Farmers Cooperative", 
+                "Regional Market", "Online Exchange", "Export Hub",
+                "Downtown Market", "Rural Collection"
+            ];
+            
+            const bestMarkets = markets
+                .map(market => ({
+                    market: market,
+                    price: Number((40 + Math.random() * 40).toFixed(2)),
+                    trend: ['up', 'down', 'stable'][Math.floor(Math.random() * 3)]
+                }))
+                .sort((a, b) => b.price - a.price)
+                .slice(0, 5);
+
+            return {
+                success: true,
+                commodity: commodity,
+                best_markets: bestMarkets,
+                recommendation: bestMarkets[0]
+            };
+        }
+
+        // Data loading functions
+        async function loadCommodities() {
+            try {
+                const data = await fetchFromAPI('/api/commodities');
+                
+                if (data.success) {
+                    state.commodities = data.commodities;
+                    renderCommoditySelect();
+                }
+            } catch (error) {
+                showToast('Error loading commodities', 'error');
+            }
+        }
+
+        async function loadCurrentPrices(commodity = '') {
+            try {
+                const params = commodity ? { commodity } : {};
+                const data = await fetchFromAPI('/api/current-prices', params);
+                
+                if (data.success) {
+                    state.priceData = data.data;
+                    renderPrices();
+                    updateLastUpdated(data.timestamp);
+                    
+                    if (commodity) {
+                        updatePriceSummary(commodity);
+                    }
+                }
+            } catch (error) {
+                showToast('Error loading prices', 'error');
+                elements.pricesContainer.innerHTML = 
+                    '<div class="error">Failed to load prices. Please try again.</div>';
+            }
+        }
+
+        async function loadPriceTrend(commodity) {
+            try {
+                const data = await fetchFromAPI(`/api/price-trend/${encodeURIComponent(commodity)}`);
+                
+                if (data.success) {
+                    elements.avgPrice.textContent = `$${data.avg_price}`;
+                    elements.maxPrice.textContent = `$${data.max_price}`;
+                    elements.minPrice.textContent = `$${data.min_price}`;
+                    
+                    elements.currentTrend.innerHTML = `
+                        <span class="trend-indicator ${data.trend}">
+                            ${data.trend === 'up' ? '↑' : data.trend === 'down' ? '↓' : '→'} ${data.trend}
+                        </span>
+                    `;
+                    
+                    if (data.chart) {
+                        const chartData = JSON.parse(data.chart);
+                        Plotly.newPlot('trend-chart', chartData.data, chartData.layout);
+                    }
+                }
+            } catch (error) {
+                showToast('Error loading price trend', 'error');
+            }
+        }
+
+        async function loadBestMarkets(commodity) {
+            try {
+                const data = await fetchFromAPI(`/api/best-markets/${encodeURIComponent(commodity)}`);
+                
+                if (data.success) {
+                    renderBestMarkets(data.best_markets, data.recommendation);
+                }
+            } catch (error) {
+                showToast('Error loading best markets', 'error');
+            }
+        }
+
+        // Rendering functions
+        function renderCommoditySelect() {
+            elements.commoditySelect.innerHTML = '<option value="">Choose a commodity...</option>';
+            
+            state.commodities.forEach(commodity => {
+                const option = document.createElement('option');
+                option.value = commodity;
+                option.textContent = commodity;
+                elements.commoditySelect.appendChild(option);
+            });
+        }
+
+        function renderPrices() {
+            elements.pricesContainer.className = state.currentView === 'grid' 
+                ? 'prices-grid' 
+                : 'prices-grid list-view';
+            
+            if (state.priceData.length === 0) {
+                elements.pricesContainer.innerHTML = '<div class="no-data">No price data available</div>';
+                return;
+            }
+            
+            elements.pricesContainer.innerHTML = state.priceData.map(item => `
+                <div class="price-card" onclick="selectCommodity('${item.commodity}')">
+                    <h3>${item.commodity}</h3>
+                    <div class="price-value">$${item.price}</div>
+                    <div class="price-trend">
+                        <span class="trend-indicator ${item.trend}">
+                            ${item.trend === 'up' ? '↑' : item.trend === 'down' ? '↓' : '→'} ${item.trend}
+                        </span>
+                    </div>
+                    <div class="market-name">📍 ${item.market}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderBestMarkets(markets, recommendation) {
+            elements.bestMarketsContainer.innerHTML = markets.map((market, index) => `
+                <div class="best-market-card">
+                    <div class="market-info">
+                        <h4>${index + 1}. ${market.market}</h4>
+                        <div class="market-price">$${market.price}/kg</div>
+                    </div>
+                    <div class="trend-badge ${market.trend}">
+                        ${market.trend === 'up' ? '↑' : market.trend === 'down' ? '↓' : '→'} ${market.trend}
+                    </div>
+                </div>
+            `).join('');
+            
+            if (recommendation) {
+                elements.recommendationBadge.innerHTML = 
+                    `Best Price: $${recommendation.price}/kg at ${recommendation.market}`;
+            }
+        }
+
+        // Event handlers
+        function handleCommodityChange(event) {
+            const commodity = event.target.value;
+            if (commodity) {
+                selectCommodity(commodity);
+            }
+        }
+
+        async function selectCommodity(commodity) {
+            state.currentCommodity = commodity;
+            elements.commoditySelect.value = commodity;
+            
+            // Show loading states
+            elements.trendSection.style.display = 'block';
+            elements.bestMarketsSection.style.display = 'block';
+            elements.trendChart.innerHTML = '<div class="loading">Loading trend data...</div>';
+            elements.bestMarketsContainer.innerHTML = '<div class="loading">Loading market data...</div>';
+            
+            // Load data
+            await Promise.all([
+                loadPriceTrend(commodity),
+                loadBestMarkets(commodity)
+            ]);
+        }
+
+        function filterMarkets(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderPrices();
+                return;
+            }
+            
+            const filtered = state.priceData.filter(item => 
+                item.market.toLowerCase().includes(searchTerm) ||
+                item.commodity.toLowerCase().includes(searchTerm)
+            );
+            
+            elements.pricesContainer.className = state.currentView === 'grid' 
+                ? 'prices-grid' 
+                : 'prices-grid list-view';
+            
+            if (filtered.length === 0) {
+                elements.pricesContainer.innerHTML = '<div class="no-data">No matching markets found</div>';
+                return;
+            }
+            
+            elements.pricesContainer.innerHTML = filtered.map(item => `
+                <div class="price-card" onclick="selectCommodity('${item.commodity}')">
+                    <h3>${item.commodity}</h3>
+                    <div class="price-value">$${item.price}</div>
+                    <div class="price-trend">
+                        <span class="trend-indicator ${item.trend}">
+                            ${item.trend === 'up' ? '↑' : item.trend === 'down' ? '↓' : '→'} ${item.trend}
+                        </span>
+                    </div>
+                    <div class="market-name">📍 ${item.market}</div>
+                </div>
+            `).join('');
+        }
+
+        function updatePriceSummary(commodity) {
+            const prices = state.priceData.filter(item => item.commodity === commodity);
+            
+            if (prices.length === 0) return;
+            
+            const avgPrice = prices.reduce((sum, item) => sum + item.price, 0) / prices.length;
+            const maxPrice = Math.max(...prices.map(item => item.price));
+            const minPrice = Math.min(...prices.map(item => item.price));
+            
+            elements.avgPrice.textContent = `$${avgPrice.toFixed(2)}`;
+            elements.maxPrice.textContent = `$${maxPrice.toFixed(2)}`;
+            elements.minPrice.textContent = `$${minPrice.toFixed(2)}`;
+        }
+
+        function updateLastUpdated(timestamp) {
+            if (timestamp) {
+                const date = new Date(timestamp);
+                elements.lastUpdated.textContent = date.toLocaleString();
+            }
+        }
+
+        async function refreshData() {
+            showToast('Refreshing data...', 'info');
+            await loadCurrentPrices(state.currentCommodity);
+            
+            if (state.currentCommodity) {
+                await Promise.all([
+                    loadPriceTrend(state.currentCommodity),
+                    loadBestMarkets(state.currentCommodity)
+                ]);
+            }
+            
+            showToast('Data refreshed successfully!', 'success');
+        }
+
+        // Utility functions
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Make selectCommodity available globally
+        window.selectCommodity = selectCommodity;
+    </script>
+</body>
+</html>
